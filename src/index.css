@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FAF8F5;
+    color: #18181B;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+.prose-editorial h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+  color: #18181B;
+}
+
+.prose-editorial h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.65rem;
+  color: #27272A;
+}
+
+.prose-editorial p {
+  font-size: 1.075rem;
+  line-height: 1.85;
+  margin-bottom: 1.4rem;
+  color: #2D2D30;
+}
+
+.prose-editorial blockquote {
+  border-left: 2px solid #C25E3E;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  color: #3F3F46;
+}
