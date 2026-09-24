@@ -837,12 +837,14 @@ export const AboutPage: React.FC = () => {
           <h1 className="font-serif text-4xl font-bold text-[#18181B]">Hi, I'm Anush Iyer.</h1>
           <p className="font-serif italic text-[#FFB300]">“Entrepreneur, observer, traveller, and always curious.”</p>
           <p className="text-sm text-[#52525B] leading-relaxed">
-            I grew up around design, creativity and the business of turning ideas into something real. As a second-generation entrepreneur, I&apos;ve had the opportunity to travel, meet interesting people, experience different cultures and see the world from many perspectives. <strong className="font-bold text-[#18181B]">The Different Thought</strong> is my space to share those experiences, ideas, observations and the little things that make life interesting &mdash; from travel and design to business, technology and everything in between.
-          </p>
+           I'm a second-generation entrepreneur in the world of design, brought up around creativity, ideas and the process of turning them into something real. Outside of work, I enjoy travelling, good conversations, great coffee, discovering new places and noticing the little things that often go unseen.
         </div>
       </div>
       <div className="space-y-4 border-t border-[#E8E3DC] pt-8">
         <h2 className="font-serif text-2xl font-bold text-[#18181B]">My Story</h2>
+        <p className="text-sm text-[#52525B] leading-relaxed">
+  I grew up around design, creativity and the business of turning ideas into something real. As a second-generation entrepreneur, I&apos;ve had the opportunity to travel, meet interesting people, experience different cultures and see the world from many perspectives. <strong className="font-bold text-[#18181B]">The Different Thought</strong> is my space to share those experiences, ideas, observations and the little things that make life interesting &mdash; from travel and design to business, technology and everything in between.
+</p>
       </div>
     </div>
   );
