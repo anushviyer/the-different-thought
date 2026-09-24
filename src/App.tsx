@@ -451,12 +451,12 @@ export const Header: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DC]">
-      <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 h-24 flex items-center justify-between">
        <Link to="/" className="flex items-center">
           <img 
             src="/logo.png" 
             alt="The Different Thought" 
-            className="h-10 sm:h-12 w-auto object-contain" 
+            className="h-14 sm:h-16 w-auto object-contain" 
           />
         </Link>
 
