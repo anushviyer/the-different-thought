@@ -594,7 +594,7 @@ export const HomePage: React.FC = () => {
       <section className="pt-12 md:pt-20 px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ECE6DF] text-xs font-medium tracking-wider uppercase text-[#FFB300]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18181B] text-xs font-medium tracking-wider uppercase text-[#FFFFFF]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Independent Editorial Publication</span>
             </div>
@@ -674,8 +674,8 @@ export const HomePage: React.FC = () => {
             </div>
             <div className="space-y-3">
               <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">About The Author</span>
-              <h3 className="font-serif text-2xl font-bold text-[#18181B]">Hi, I'm {author.name}.</h3>
-              <p className="text-[#52525B] text-sm leading-relaxed">{author.short_bio}</p>
+              <h3 className="font-serif text-2xl font-bold text-[#18181B]">Hi, I'm Anush.</h3>
+              <p className="text-[#52525B] text-sm leading-relaxed">I’m a second-generation entrepreneur in the world of design, someone who enjoys good conversations, new places, great coffee and the little things that make an ordinary day memorable. This is my space to share the things I experience, think about, question and discover along the way.</p>
               <Link to="/about" className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#FFB300]">
                 <span>Read Full Story</span>
                 <ArrowRight className="w-3.5 h-3.5" />
