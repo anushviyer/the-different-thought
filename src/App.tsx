@@ -462,10 +462,10 @@ export const Header: React.FC = () => {
 
         <nav className="hidden md:flex items-center space-x-8">
           <NavLink to="/" end className={navClass}>Home</NavLink>
-          <NavLink to="/origin" className={navClass}>Origin</NavLink>
-          <NavLink to="/pillars" className={navClass}>Pillars</NavLink>
-          <NavLink to="/thoughts" className={navClass}>Thoughts</NavLink>
-          <NavLink to="/reach out" className={navClass}>Reach Out</NavLink>
+          <NavLink to="/about" className={navClass}>Origin</NavLink>
+          <NavLink to="/categories" className={navClass}>Pillars</NavLink>
+          <NavLink to="/blog" className={navClass}>Thoughts</NavLink>
+          <NavLink to="/contact" className={navClass}>Reach Out</NavLink>
         </nav>
 
         <div className="flex items-center space-x-4">
@@ -503,10 +503,10 @@ export const Header: React.FC = () => {
         <div className="md:hidden bg-[#FAF8F5] border-b border-[#E8E3DC] px-6 py-6 space-y-4">
           <div className="flex flex-col space-y-3 text-lg font-serif">
             <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-            <Link to="/origin" onClick={() => setMobileMenuOpen(false)}>Origin</Link>
-            <Link to="/pillars" onClick={() => setMobileMenuOpen(false)}>Pillars</Link>
-            <Link to="/thoughts" onClick={() => setMobileMenuOpen(false)}>Thoughts</Link>
-            <Link to="/reach out" onClick={() => setMobileMenuOpen(false)}>Reach Out</Link>
+            <Link to="/about" onClick={() => setMobileMenuOpen(false)}>Origin</Link>
+            <Link to="/categories" onClick={() => setMobileMenuOpen(false)}>Pillars</Link>
+            <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Thoughts</Link>
+            <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Reach Out</Link>
           </div>
         </div>
       )}
