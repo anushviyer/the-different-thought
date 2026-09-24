@@ -841,15 +841,12 @@ export const AboutPage: React.FC = () => {
       </div>
       <div className="space-y-4 border-t border-[#E8E3DC] pt-8">
         <h2 className="font-serif text-2xl font-bold text-[#18181B]">My Story</h2>
-        <div className="text-sm sm:text-base text-[#3F3F46] leading-relaxed whitespace-pre-line">I grew up around design, creativity and the world of building ideas from scratch. Being part of a second-generation business taught me early on that creativity isn't just about making something look good — it's about understanding people, solving problems and creating something that has a purpose.
+        <div className="text-sm sm:text-base text-[#3F3F46] leading-relaxed whitespace-pre-line">### My Story
 
-Over the years, work has taken me to different cities, countries, exhibitions and experiences. Along the way, I've met interesting people, discovered new places, seen how different cultures approach life and design, and collected far more thoughts than I could keep to myself.
+I grew up around design, creativity and the business of turning ideas into something real. As a second-generation entrepreneur, I've had the opportunity to travel, meet interesting people, experience different cultures and see the world from many perspectives.
 
-The Different Thought is where I bring some of those thoughts together.
-
-It's not meant to be a guidebook, a business blog or a collection of perfectly polished opinions. It's simply my space to write about the things I experience, the places I visit, the ideas that interest me, the things I question and the little moments that make life interesting.
-
-Sometimes it's about travel. Sometimes it's about design, business or technology. Sometimes it's just a thought that stayed with me a little longer than expected.</div>
+**The Different Thought** is my space to share those experiences, ideas, observations and the little things that make life interesting — from travel and design to business, technology and everything in between.
+</div>
       </div>
       <div className="bg-[#F3EFEA] border border-[#E8E3DC] p-6 rounded-xl space-y-2">
         <h3 className="font-serif text-xl font-bold text-[#18181B]">Philosophy</h3>
