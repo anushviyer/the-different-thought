@@ -846,6 +846,7 @@ export const AboutPage: React.FC = () => {
       </div>
     </div>
   );
+  };
 export const CategoriesPage: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   useEffect(() => { async function load() { setCategories(await dbEngine.getCategories()); } load(); }, []);
