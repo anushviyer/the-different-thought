@@ -599,7 +599,7 @@ export const HomePage: React.FC = () => {
               <span>Independent Editorial Publication</span>
             </div>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#18181B] leading-[1.12]">
-              Just Thoughts,; Stories & Everything In Between.
+              Just Thoughts,<br></>Stories & Everything In Between.
             </h1>
             <p className="text-lg text-[#52525B] leading-relaxed max-w-xl">
               I’ve always believed that there’s more than one way to look at something. This blog is a collection of my experiences, travels, observations, interests and the thoughts that stay with me long after a moment has passed.
@@ -612,7 +612,7 @@ export const HomePage: React.FC = () => {
             </div>
           </div>
           <div className="lg:col-span-5 aspect-[4/5] rounded-2xl overflow-hidden shadow-lg border border-[#E8E3DC]">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop" alt="Contemplative" className="w-full h-full object-cover grayscale-[20%]" />
+            <img src="Anush Iyer.png" alt="Contemplative" className="w-full h-full object-cover grayscale-[20%]" />
           </div>
         </div>
       </section>
