@@ -452,11 +452,12 @@ export const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DC]">
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/" className="group flex flex-col">
-          <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#18181B] group-hover:text-[#C25E3E] transition-colors">
-            THE DIFFERENT THOUGHT
-          </span>
-          <span className="text-[10px] tracking-[0.2em] uppercase text-[#71717A] -mt-0.5">A Personal Journal</span>
+       <Link to="/" className="flex items-center">
+          <img 
+            src="/logo.png" 
+            alt="The Different Thought" 
+            className="h-10 sm:h-12 w-auto object-contain" 
+          />
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
