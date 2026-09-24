@@ -866,7 +866,7 @@ export const CategoriesPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export const CategoryDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
