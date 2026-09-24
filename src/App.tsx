@@ -447,7 +447,7 @@ export const Header: React.FC = () => {
   };
 
   const navClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm tracking-wider uppercase transition-colors ${isActive ? 'text-[#C25E3E] font-medium' : 'text-[#3F3F46] hover:text-[#18181B]'}`;
+    `text-sm tracking-wider uppercase transition-colors ${isActive ? 'text-[#FFB300] font-medium' : 'text-[#3F3F46] hover:text-[#18181B]'}`;
 
   return (
     <header className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DC]">
@@ -462,17 +462,17 @@ export const Header: React.FC = () => {
 
         <nav className="hidden md:flex items-center space-x-8">
           <NavLink to="/" end className={navClass}>Home</NavLink>
-          <NavLink to="/blog" className={navClass}>Blog</NavLink>
-          <NavLink to="/about" className={navClass}>About</NavLink>
-          <NavLink to="/categories" className={navClass}>Categories</NavLink>
-          <NavLink to="/contact" className={navClass}>Contact</NavLink>
+          <NavLink to="/origin" className={navClass}>Origin</NavLink>
+          <NavLink to="/pillars" className={navClass}>Pillars</NavLink>
+          <NavLink to="/thoughts" className={navClass}>Thoughts</NavLink>
+          <NavLink to="/reach out" className={navClass}>Reach Out</NavLink>
         </nav>
 
         <div className="flex items-center space-x-4">
           <button onClick={() => setSearchBarOpen(!searchBarOpen)} className="p-2 text-[#52525B] hover:text-[#18181B]">
             <Search className="w-5 h-5" />
           </button>
-          <Link to="/contact" className="hidden sm:inline-flex items-center space-x-1.5 px-4 py-2 bg-[#18181B] text-[#FAF8F5] text-xs uppercase tracking-wider font-medium rounded-full hover:bg-[#C25E3E] transition-colors">
+          <Link to="/contact" className="hidden sm:inline-flex items-center space-x-1.5 px-4 py-2 bg-[#18181B] text-[#FAF8F5] text-xs uppercase tracking-wider font-medium rounded-full hover:bg-[#FFB300] transition-colors">
             <span>Subscribe</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
@@ -494,7 +494,7 @@ export const Header: React.FC = () => {
               className="w-full bg-transparent text-lg text-[#18181B] placeholder-[#A1A1AA] focus:outline-none"
               autoFocus
             />
-            <button type="submit" className="text-xs uppercase tracking-widest text-[#C25E3E] font-semibold">Search</button>
+            <button type="submit" className="text-xs uppercase tracking-widest text-[#FFB300] font-semibold">Search</button>
           </form>
         </div>
       )}
@@ -503,10 +503,10 @@ export const Header: React.FC = () => {
         <div className="md:hidden bg-[#FAF8F5] border-b border-[#E8E3DC] px-6 py-6 space-y-4">
           <div className="flex flex-col space-y-3 text-lg font-serif">
             <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-            <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Blog Archive</Link>
-            <Link to="/about" onClick={() => setMobileMenuOpen(false)}>About Author</Link>
-            <Link to="/categories" onClick={() => setMobileMenuOpen(false)}>Categories</Link>
-            <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+            <Link to="/origin" onClick={() => setMobileMenuOpen(false)}>Origin</Link>
+            <Link to="/pillars" onClick={() => setMobileMenuOpen(false)}>Pillars</Link>
+            <Link to="/thoughts" onClick={() => setMobileMenuOpen(false)}>Thoughts</Link>
+            <Link to="/reach out" onClick={() => setMobileMenuOpen(false)}>Reach Out</Link>
           </div>
         </div>
       )}
@@ -527,10 +527,10 @@ export const Footer: React.FC = () => (
         <div className="md:col-span-3 space-y-3">
           <div className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">Explore</div>
           <ul className="space-y-2 text-sm text-[#3F3F46]">
-            <li><Link to="/blog" className="hover:text-[#C25E3E]">All Stories</Link></li>
-            <li><Link to="/about" className="hover:text-[#C25E3E]">About Author</Link></li>
-            <li><Link to="/categories" className="hover:text-[#C25E3E]">Categories</Link></li>
-            <li><Link to="/contact" className="hover:text-[#C25E3E]">Contact</Link></li>
+            <li><Link to="/blog" className="hover:text-[#FFB300]">All Stories</Link></li>
+            <li><Link to="/about" className="hover:text-[#FFB300]">About Author</Link></li>
+            <li><Link to="/categories" className="hover:text-[#FFB300]">Categories</Link></li>
+            <li><Link to="/contact" className="hover:text-[#FFB300]">Contact</Link></li>
           </ul>
         </div>
         <div className="md:col-span-3 space-y-3">
@@ -594,7 +594,7 @@ export const HomePage: React.FC = () => {
       <section className="pt-12 md:pt-20 px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ECE6DF] text-xs font-medium tracking-wider uppercase text-[#C25E3E]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ECE6DF] text-xs font-medium tracking-wider uppercase text-[#FFB300]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Independent Editorial Publication</span>
             </div>
@@ -605,7 +605,7 @@ export const HomePage: React.FC = () => {
               A personal digital journal examining everyday quiet rituals, architectural textures, mindful technology, and subtle narratives.
             </p>
             <div className="flex gap-4 pt-2">
-              <Link to="/blog" className="px-6 py-3.5 bg-[#18181B] text-[#FAF8F5] font-medium text-sm rounded-full hover:bg-[#C25E3E] transition-colors inline-flex items-center gap-2">
+              <Link to="/blog" className="px-6 py-3.5 bg-[#18181B] text-[#FAF8F5] font-medium text-sm rounded-full hover:bg-[#FFB300] transition-colors inline-flex items-center gap-2">
                 <span>Explore The Journal</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
@@ -631,10 +631,10 @@ export const HomePage: React.FC = () => {
                 <span>{featured.reading_time}</span>
               </div>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">
-                <Link to={`/blog/${featured.slug}`} className="hover:text-[#C25E3E] transition-colors">{featured.title}</Link>
+                <Link to={`/blog/${featured.slug}`} className="hover:text-[#FFB300] transition-colors">{featured.title}</Link>
               </h2>
               <p className="text-[#52525B] text-sm leading-relaxed">{featured.excerpt}</p>
-              <Link to={`/blog/${featured.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[#18181B] hover:text-[#C25E3E]">
+              <Link to={`/blog/${featured.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[#18181B] hover:text-[#FFB300]">
                 <span>Read Full Essay</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
@@ -646,7 +646,7 @@ export const HomePage: React.FC = () => {
       <section className="px-6 max-w-6xl mx-auto">
         <div className="border-t border-[#E8E3DC] pt-12 mb-8 flex justify-between items-center">
           <h2 className="font-serif text-2xl font-bold text-[#18181B]">Recent Dispatches</h2>
-          <Link to="/blog" className="text-xs uppercase tracking-wider font-semibold text-[#18181B] hover:text-[#C25E3E]">All Stories &rarr;</Link>
+          <Link to="/blog" className="text-xs uppercase tracking-wider font-semibold text-[#18181B] hover:text-[#FFB300]">All Stories &rarr;</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {latest.map(article => (
@@ -655,9 +655,9 @@ export const HomePage: React.FC = () => {
                 <img src={article.cover_image_url} alt={article.title} className="w-full h-full object-cover hover:scale-105 transition-transform" />
               </Link>
               <div className="p-6 space-y-3">
-                <span className="text-xs text-[#C25E3E] uppercase font-semibold">{article.reading_time}</span>
+                <span className="text-xs text-[#FFB300] uppercase font-semibold">{article.reading_time}</span>
                 <h3 className="font-serif text-xl font-bold text-[#18181B]">
-                  <Link to={`/blog/${article.slug}`} className="hover:text-[#C25E3E]">{article.title}</Link>
+                  <Link to={`/blog/${article.slug}`} className="hover:text-[#FFB300]">{article.title}</Link>
                 </h3>
                 <p className="text-sm text-[#52525B] line-clamp-2">{article.excerpt}</p>
               </div>
@@ -676,7 +676,7 @@ export const HomePage: React.FC = () => {
               <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">About The Author</span>
               <h3 className="font-serif text-2xl font-bold text-[#18181B]">Hi, I'm {author.name}.</h3>
               <p className="text-[#52525B] text-sm leading-relaxed">{author.short_bio}</p>
-              <Link to="/about" className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#C25E3E]">
+              <Link to="/about" className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#FFB300]">
                 <span>Read Full Story</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -697,11 +697,11 @@ export const HomePage: React.FC = () => {
             onChange={(e) => setSubEmail(e.target.value)}
             className="flex-1 px-4 py-2 bg-white border border-[#E8E3DC] rounded-full text-sm focus:outline-none"
           />
-          <button type="submit" className="px-5 py-2 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-full hover:bg-[#C25E3E]">
+          <button type="submit" className="px-5 py-2 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-full hover:bg-[#FFB300]">
             Join
           </button>
         </form>
-        {subStatus && <p className="text-xs text-[#C25E3E]">{subStatus}</p>}
+        {subStatus && <p className="text-xs text-[#FFB300]">{subStatus}</p>}
       </section>
     </div>
   );
@@ -759,9 +759,9 @@ export const BlogPage: React.FC = () => {
               <img src={art.cover_image_url} alt={art.title} className="w-full h-full object-cover" />
             </Link>
             <div className="p-6 space-y-3">
-              <span className="text-xs text-[#C25E3E] font-semibold uppercase">{art.reading_time}</span>
+              <span className="text-xs text-[#FFB300] font-semibold uppercase">{art.reading_time}</span>
               <h2 className="font-serif text-xl font-bold text-[#18181B]">
-                <Link to={`/blog/${art.slug}`} className="hover:text-[#C25E3E]">{art.title}</Link>
+                <Link to={`/blog/${art.slug}`} className="hover:text-[#FFB300]">{art.title}</Link>
               </h2>
               <p className="text-sm text-[#52525B] line-clamp-3">{art.excerpt}</p>
             </div>
@@ -797,7 +797,7 @@ export const ArticlePage: React.FC = () => {
       </Link>
       <header className="space-y-4">
         <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#18181B] leading-tight">{article.title}</h1>
-        <p className="font-serif italic text-lg text-[#52525B] border-l-2 border-[#C25E3E] pl-4">{article.excerpt}</p>
+        <p className="font-serif italic text-lg text-[#52525B] border-l-2 border-[#FFB300] pl-4">{article.excerpt}</p>
         <div className="flex items-center justify-between pt-4 border-t border-[#E8E3DC] text-xs text-[#71717A]">
           <span>By {article.author_name} &bull; {article.reading_time}</span>
           <button
@@ -835,7 +835,7 @@ export const AboutPage: React.FC = () => {
         </div>
         <div className="space-y-2">
           <h1 className="font-serif text-4xl font-bold text-[#18181B]">Hi, I'm {author.name}.</h1>
-          <p className="font-serif italic text-[#C25E3E]">"{author.headline}"</p>
+          <p className="font-serif italic text-[#FFB300]">"{author.headline}"</p>
           <p className="text-sm text-[#52525B] leading-relaxed">{author.short_bio}</p>
         </div>
       </div>
@@ -865,7 +865,7 @@ export const CategoriesPage: React.FC = () => {
               <h2 className="font-serif text-2xl font-bold text-[#18181B]">{c.name}</h2>
               <p className="text-sm text-[#52525B] mt-1">{c.description}</p>
             </div>
-            <span className="text-xs uppercase font-semibold text-[#C25E3E]">{c.article_count || 0} Stories</span>
+            <span className="text-xs uppercase font-semibold text-[#FFB300]">{c.article_count || 0} Stories</span>
           </Link>
         ))}
       </div>
@@ -948,7 +948,7 @@ export const ContactPage: React.FC = () => {
           <input type="text" required placeholder="Name" className="w-full p-3 bg-white border border-[#E8E3DC] rounded-lg text-sm" />
           <input type="email" required placeholder="Email" className="w-full p-3 bg-white border border-[#E8E3DC] rounded-lg text-sm" />
           <textarea rows={4} required placeholder="Message" className="w-full p-3 bg-white border border-[#E8E3DC] rounded-lg text-sm" />
-          <button type="submit" className="w-full py-3 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-lg hover:bg-[#C25E3E]">Send</button>
+          <button type="submit" className="w-full py-3 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-lg hover:bg-[#FFB300]">Send</button>
         </form>
       )}
     </div>
@@ -970,7 +970,7 @@ export const AdminLayout: React.FC = () => {
       <aside className="w-60 border-r border-[#E8E3DC] bg-white p-6 flex flex-col justify-between shrink-0">
         <div className="space-y-6">
           <div className="font-serif font-bold text-lg">TDT &bull; CMS</div>
-          <Link to="/admin/articles/new" className="block text-center py-2 bg-[#C25E3E] text-white text-xs uppercase font-semibold rounded-lg">
+          <Link to="/admin/articles/new" className="block text-center py-2 bg-[#FFB300] text-white text-xs uppercase font-semibold rounded-lg">
             + New Essay
           </Link>
           <nav className="space-y-1 text-xs uppercase tracking-wider font-semibold text-[#52525B]">
@@ -1042,7 +1042,7 @@ export const AdminArticlesList: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center"><h1 className="font-serif text-3xl font-bold">Articles</h1><Link to="/admin/articles/new" className="px-4 py-2 bg-[#C25E3E] text-white text-xs uppercase font-semibold rounded-lg">+ New Article</Link></div>
+      <div className="flex justify-between items-center"><h1 className="font-serif text-3xl font-bold">Articles</h1><Link to="/admin/articles/new" className="px-4 py-2 bg-[#FFB300] text-white text-xs uppercase font-semibold rounded-lg">+ New Article</Link></div>
       <div className="bg-white border rounded-xl divide-y">
         {articles.map(a => (
           <div key={a.id} className="p-4 flex justify-between items-center">
