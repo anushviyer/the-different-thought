@@ -612,7 +612,7 @@ export const HomePage: React.FC = () => {
             </div>
           </div>
           <div className="lg:col-span-5 aspect-[4/5] rounded-2xl overflow-hidden shadow-lg border border-[#E8E3DC]">
-            <img src="Anush Iyer.png" alt="Contemplative" className="w-full h-full object-cover grayscale-[20%]" />
+            <img src="/anush-iyer.png" alt="Contemplative" className="w-full h-full object-cover grayscale-[20%]" />
           </div>
         </div>
       </section>
