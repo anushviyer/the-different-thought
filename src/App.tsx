@@ -841,12 +841,9 @@ export const AboutPage: React.FC = () => {
       </div>
       <div className="space-y-4 border-t border-[#E8E3DC] pt-8">
         <h2 className="font-serif text-2xl font-bold text-[#18181B]">My Story</h2>
-        <div className="text-sm sm:text-base text-[#3F3F46] leading-relaxed whitespace-pre-line">### My Story
-
-I grew up around design, creativity and the business of turning ideas into something real. As a second-generation entrepreneur, I've had the opportunity to travel, meet interesting people, experience different cultures and see the world from many perspectives.
-
-**The Different Thought** is my space to share those experiences, ideas, observations and the little things that make life interesting — from travel and design to business, technology and everything in between.
-</div>
+        <div <p className="text-sm text-[#52525B] leading-relaxed">
+  I grew up around design, creativity and the business of turning ideas into something real. As a second-generation entrepreneur, I&apos;ve had the opportunity to travel, meet interesting people, experience different cultures and see the world from many perspectives. <strong className="font-bold text-[#18181B]">The Different Thought</strong> is my space to share those experiences, ideas, observations and the little things that make life interesting &mdash; from travel and design to business, technology and everything in between.
+</p></div>
       </div>
       <div className="bg-[#F3EFEA] border border-[#E8E3DC] p-6 rounded-xl space-y-2">
         <h3 className="font-serif text-xl font-bold text-[#18181B]">Philosophy</h3>
