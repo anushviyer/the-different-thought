@@ -831,7 +831,7 @@ export const AboutPage: React.FC = () => {
     <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
       <div className="flex flex-col sm:flex-row gap-8 items-center">
         <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 border border-[#E8E3DC]">
-          <img anush-author.png alt={author.name} className="w-full h-full object-cover" />
+          <img src="/anush-author.png" alt="Anush Iyer" className="w-full h-full object-cover" />
         </div>
         <div className="space-y-2">
           <h1 className="font-serif text-4xl font-bold text-[#18181B]">Hi, I'm Anush Iyer.</h1>
