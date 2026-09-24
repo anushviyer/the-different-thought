@@ -670,7 +670,7 @@ export const HomePage: React.FC = () => {
         <section className="px-6 max-w-6xl mx-auto">
           <div className="bg-[#F3EFEA] border border-[#E8E3DC] rounded-2xl p-8 sm:p-12 flex flex-col sm:flex-row gap-8 items-center">
             <div className="w-32 h-32 rounded-full overflow-hidden shrink-0 border-2 border-white">
-              <img src={author.profile_image_url} alt={author.name} className="w-full h-full object-cover" />
+              <img src="/anush-author.png" alt={author.name} className="w-full h-full object-cover" />
             </div>
             <div className="space-y-3">
               <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">About The Author</span>
