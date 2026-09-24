@@ -599,10 +599,10 @@ export const HomePage: React.FC = () => {
               <span>Independent Editorial Publication</span>
             </div>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#18181B] leading-[1.12]">
-              Stories, ideas &amp; observations from a different point of view.
+              Just Thoughts,; Stories & Everything In Between.
             </h1>
             <p className="text-lg text-[#52525B] leading-relaxed max-w-xl">
-              A personal digital journal examining everyday quiet rituals, architectural textures, mindful technology, and subtle narratives.
+              I’ve always believed that there’s more than one way to look at something. This blog is a collection of my experiences, travels, observations, interests and the thoughts that stay with me long after a moment has passed.
             </p>
             <div className="flex gap-4 pt-2">
               <Link to="/blog" className="px-6 py-3.5 bg-[#18181B] text-[#FAF8F5] font-medium text-sm rounded-full hover:bg-[#FFB300] transition-colors inline-flex items-center gap-2">
