@@ -831,17 +831,25 @@ export const AboutPage: React.FC = () => {
     <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
       <div className="flex flex-col sm:flex-row gap-8 items-center">
         <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 border border-[#E8E3DC]">
-          <img src={author.profile_image_url} alt={author.name} className="w-full h-full object-cover" />
+          <img anush-author.png alt={author.name} className="w-full h-full object-cover" />
         </div>
         <div className="space-y-2">
-          <h1 className="font-serif text-4xl font-bold text-[#18181B]">Hi, I'm {author.name}.</h1>
-          <p className="font-serif italic text-[#FFB300]">"{author.headline}"</p>
-          <p className="text-sm text-[#52525B] leading-relaxed">{author.short_bio}</p>
+          <h1 className="font-serif text-4xl font-bold text-[#18181B]">Hi, I'm Anush Iyer.</h1>
+          <p className="font-serif italic text-[#FFB300]">“Entrepreneur, observer, traveller, and always curious.”</p>
+          <p className="text-sm text-[#52525B] leading-relaxed">I'm a second-generation entrepreneur in the world of design, brought up around creativity, ideas and the process of turning them into something real. Outside of work, I enjoy travelling, good conversations, great coffee, discovering new places and noticing the little things that often go unseen.</p>
         </div>
       </div>
       <div className="space-y-4 border-t border-[#E8E3DC] pt-8">
         <h2 className="font-serif text-2xl font-bold text-[#18181B]">My Story</h2>
-        <div className="text-sm sm:text-base text-[#3F3F46] leading-relaxed whitespace-pre-line">{author.full_story}</div>
+        <div className="text-sm sm:text-base text-[#3F3F46] leading-relaxed whitespace-pre-line">I grew up around design, creativity and the world of building ideas from scratch. Being part of a second-generation business taught me early on that creativity isn't just about making something look good — it's about understanding people, solving problems and creating something that has a purpose.
+
+Over the years, work has taken me to different cities, countries, exhibitions and experiences. Along the way, I've met interesting people, discovered new places, seen how different cultures approach life and design, and collected far more thoughts than I could keep to myself.
+
+The Different Thought is where I bring some of those thoughts together.
+
+It's not meant to be a guidebook, a business blog or a collection of perfectly polished opinions. It's simply my space to write about the things I experience, the places I visit, the ideas that interest me, the things I question and the little moments that make life interesting.
+
+Sometimes it's about travel. Sometimes it's about design, business or technology. Sometimes it's just a thought that stayed with me a little longer than expected.</div>
       </div>
       <div className="bg-[#F3EFEA] border border-[#E8E3DC] p-6 rounded-xl space-y-2">
         <h3 className="font-serif text-xl font-bold text-[#18181B]">Philosophy</h3>
