@@ -599,7 +599,7 @@ export const HomePage: React.FC = () => {
               <span>Independent Editorial Publication</span>
             </div>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#18181B] leading-[1.12]">
-              Just Thoughts,<br></>Stories & Everything In Between.
+              Just Thoughts,<br />Stories &amp; Everything In Between
             </h1>
             <p className="text-lg text-[#52525B] leading-relaxed max-w-xl">
               I’ve always believed that there’s more than one way to look at something. This blog is a collection of my experiences, travels, observations, interests and the thoughts that stay with me long after a moment has passed.
