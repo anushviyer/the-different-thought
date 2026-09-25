@@ -1174,7 +1174,7 @@ export const AdminLayout: React.FC = () => {
   <img 
     src="/logo.png" 
     alt="The Different Thought" 
-    className="h-8 w-auto object-contain" 
+    className="h-12 w-auto object-contain" 
   />
   <span className="text-xs uppercase tracking-wider font-semibold text-[#71717A]">&bull; CMS</span>
 </div>
@@ -1219,8 +1219,22 @@ export const AdminLoginPage: React.FC = () => {
       <form onSubmit={handleLogin} className="max-w-sm w-full bg-white p-8 rounded-xl border border-[#E8E3DC] space-y-4">
         <h1 className="font-serif text-2xl font-bold text-center">Editorial Login</h1>
         {err && <p className="text-xs text-red-600">{err}</p>}
-        <input type="email" value={email} onChange={e=>setEmail(e.target.value)} className="w-full p-2.5 border rounded-lg text-sm" />
-        <input type="password" value={pass} onChange={e=>setPass(e.target.value)} className="w-full p-2.5 border rounded-lg text-sm" />
+<input 
+  type="email" 
+  value={email} 
+  onChange={e => setEmail(e.target.value)} 
+  placeholder="Email ID (e.g. admin@differentthought.com)" 
+  className="w-full p-2.5 border rounded-lg text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black" 
+  required
+/>
+<input 
+  type="password" 
+  value={pass} 
+  onChange={e => setPass(e.target.value)} 
+  placeholder="Enter Password" 
+  className="w-full p-2.5 border rounded-lg text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black" 
+  required
+/>
         <button type="submit" className="w-full py-2.5 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-lg">Sign In</button>
       </form>
     </div>
