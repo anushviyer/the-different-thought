@@ -407,7 +407,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return true;
       }
     }
-    if (email === 'admin@thedifferentthought.com' && pass === 'Thought2026!') {
+    if (email === 'admin@differentthought.com' && pass === 'Geetha9969$') {
       setIsAuthenticated(true);
       setUserEmail(email);
       localStorage.setItem('tdt_admin_auth', 'true');
@@ -1095,10 +1095,10 @@ export const ContactPage: React.FC = () => {
           Write To Me
         </span>
         <a 
-          href="mailto:hello@thedifferentthought.com"
+          href="mailto:hello@differentthought.com"
           className="inline-flex items-center text-xl md:text-2xl font-serif font-bold text-[#18181B] hover:text-[#FFB300] transition"
         >
-          hello@thedifferentthought.com &rarr;
+          hello@differentthought.com &rarr;
         </a>
       </section>
 
@@ -1145,10 +1145,10 @@ export const ContactPage: React.FC = () => {
         </p>
         <div>
           <a 
-            href="mailto:hello@thedifferentthought.com"
+            href="mailto:hello@differentthought.com"
             className="inline-block text-sm font-semibold text-[#18181B] hover:text-[#FFB300] transition"
           >
-            hello@thedifferentthought.com &rarr;
+            hello@differentthought.com &rarr;
           </a>
         </div>
       </section>
@@ -1170,7 +1170,14 @@ export const AdminLayout: React.FC = () => {
     <div className="min-h-screen flex bg-[#FAF8F5]">
       <aside className="w-60 border-r border-[#E8E3DC] bg-white p-6 flex flex-col justify-between shrink-0">
         <div className="space-y-6">
-          <div className="font-serif font-bold text-lg">TDT &bull; CMS</div>
+          <div className="flex items-center gap-2">
+  <img 
+    src="/logo.png" 
+    alt="The Different Thought" 
+    className="h-8 w-auto object-contain" 
+  />
+  <span className="text-xs uppercase tracking-wider font-semibold text-[#71717A]">&bull; CMS</span>
+</div>
           <Link to="/admin/articles/new" className="block text-center py-2 bg-[#FFB300] text-white text-xs uppercase font-semibold rounded-lg">
             + New Essay
           </Link>
@@ -1195,8 +1202,8 @@ export const AdminLayout: React.FC = () => {
 };
 
 export const AdminLoginPage: React.FC = () => {
-  const [email, setEmail] = useState('admin@thedifferentthought.com');
-  const [pass, setPass] = useState('Thought2026!');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
   const [err, setErr] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
