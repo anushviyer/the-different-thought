@@ -447,7 +447,7 @@ export const Header: React.FC = () => {
     setStatus('loading');
 
     try {
-      const res = await fetch('/api/subscribers.php', {
+      const res = await fetch('/subscribers.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1490,7 +1490,7 @@ export const AdminSubscribersPage: React.FC = () => {
   const fetchSubscribers = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/subscribers.php');
+      const res = await fetch('/subscribers.php');
       if (res.ok) {
         const data = await res.json();
         setSubscribers(data);
