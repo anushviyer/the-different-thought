@@ -1130,7 +1130,172 @@ export const AdminArticleEditor: React.FC = () => {
 };
 
 export const AdminMediaPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Media</h1><p className="text-sm">Manage image links and storage.</p></div>;
-export const AdminCategoriesPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Categories</h1><p className="text-sm">Organize publication pillars.</p></div>;
+export const AdminCategoriesPage: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [name, setName] = useState('');
+  const [slug, setSlug] = useState('');
+  const [description, setDescription] = useState('');
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  const loadCategories = async () => {
+    const data = await dbEngine.getCategories();
+    setCategories(data);
+  };
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
+  const handleNameChange = (val: string) => {
+    setName(val);
+    if (!editingId) {
+      setSlug(
+        val
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '')
+      );
+    }
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim()) return;
+
+    await dbEngine.saveCategory({
+      id: editingId || undefined,
+      name: name.trim(),
+      slug: slug.trim() || undefined,
+      description: description.trim()
+    });
+
+    setName('');
+    setSlug('');
+    setDescription('');
+    setEditingId(null);
+    await loadCategories();
+  };
+
+  const handleEdit = (cat: Category) => {
+    setEditingId(cat.id);
+    setName(cat.name);
+    setSlug(cat.slug);
+    setDescription(cat.description || '');
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setName('');
+    setSlug('');
+    setDescription('');
+  };
+
+  const handleDelete = async (id: string, catName: string) => {
+    if (confirm(`Are you sure you want to delete "${catName}"?`)) {
+      await dbEngine.deleteCategory(id);
+      await loadCategories();
+    }
+  };
+
+  return (
+    <div className="space-y-8 max-w-4xl">
+      <div>
+        <h1 className="font-serif text-3xl font-bold text-[#18181B]">Categories</h1>
+        <p className="text-sm text-[#71717A] mt-1">Organize publication pillars.</p>
+      </div>
+
+      {/* Add / Edit Category Form */}
+      <form onSubmit={handleSave} className="bg-white border border-[#E8E3DC] rounded-xl p-6 space-y-4">
+        <h2 className="font-serif text-lg font-bold text-[#18181B]">
+          {editingId ? 'Edit Category' : 'Add New Category'}
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">Title</label>
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => handleNameChange(e.target.value)}
+              placeholder="e.g. Design & Spaces"
+              className="w-full px-3 py-2 border border-[#E8E3DC] rounded-lg text-sm focus:outline-none focus:border-[#18181B]"
+            />
+          </div>
+          <div>
+            <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">Slug</label>
+            <input
+              type="text"
+              required
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              placeholder="e.g. design"
+              className="w-full px-3 py-2 border border-[#E8E3DC] rounded-lg text-sm focus:outline-none focus:border-[#18181B]"
+            />
+          </div>
+        </div>
+        <div>
+          <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">Description</label>
+          <textarea
+            rows={2}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Brief overview of what belongs in this pillar..."
+            className="w-full px-3 py-2 border border-[#E8E3DC] rounded-lg text-sm focus:outline-none focus:border-[#18181B]"
+          />
+        </div>
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            className="px-5 py-2.5 bg-[#FFB300] hover:bg-[#E6A100] text-black font-semibold text-xs uppercase tracking-wider rounded-lg transition"
+          >
+            {editingId ? 'Save Changes' : '+ Add Category'}
+          </button>
+          {editingId && (
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="px-4 py-2 text-xs uppercase font-semibold text-[#71717A] hover:text-[#18181B]"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      </form>
+
+      {/* Category List */}
+      <div className="bg-white border border-[#E8E3DC] rounded-xl overflow-hidden divide-y divide-[#E8E3DC]">
+        {categories.length === 0 ? (
+          <div className="p-6 text-sm text-[#71717A] text-center">No categories found.</div>
+        ) : (
+          categories.map((c) => (
+            <div key={c.id} className="p-4 flex items-center justify-between gap-4">
+              <div>
+                <div className="font-bold text-[#18181B] text-base">{c.name}</div>
+                <div className="text-xs text-[#71717A] mt-0.5">/{c.slug} &bull; {c.description}</div>
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => handleEdit(c)}
+                  className="text-xs font-semibold text-[#18181B] hover:text-[#FFB300] transition"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(c.id, c.name)}
+                  className="text-xs font-semibold text-red-500 hover:text-red-700 transition"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
 export const AdminTagsPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Tags</h1><p className="text-sm">Manage taxonomy keywords.</p></div>;
 export const AdminSubscribersPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Subscribers</h1><p className="text-sm">View audience subscriptions.</p></div>;
 export const AdminAboutPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">About Page CMS</h1><p className="text-sm">Edit your narrative biography and philosophy directly.</p></div>;
