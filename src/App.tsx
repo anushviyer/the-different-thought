@@ -518,13 +518,18 @@ export const Footer: React.FC = () => (
   <footer className="bg-[#FAF8F5] border-t border-[#E8E3DC] pt-16 pb-12 mt-20">
     <div className="max-w-6xl mx-auto px-6">
       <div className="md:col-span-6 space-y-4">
+            <div className="md:col-span-6 space-y-4">
             <Link to="/" className="inline-block">
               <img 
-                src="/Logo.png" 
+                src="/logo.png" 
                 alt="The Different Thought" 
                 className="h-10 w-auto object-contain" 
               />
             </Link>
+            <p className="text-[#52525B] text-sm leading-relaxed max-w-md">
+              An independent digital journal committed to examining everyday realities, slow journeys, deliberate craft, and unconventional viewpoints.
+            </p>
+          </div>
             <p className="text-[#52525B] text-sm leading-relaxed max-w-md">
               An independent digital journal committed to examining everyday realities, slow journeys, deliberate craft, and unconventional viewpoints.
             </p>
@@ -553,7 +558,7 @@ export const Footer: React.FC = () => (
     </div>
   </footer>
 );
-
+};
 export const PublicLayout: React.FC = () => (
   <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#18181B]">
     <Header />
