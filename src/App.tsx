@@ -434,85 +434,158 @@ export const useAuth = () => useContext(AuthContext);
    4. PUBLIC LAYOUT & NAVIGATION
    ========================================================================== */
 export const Header: React.FC = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchBarOpen, setSearchBarOpen] = useState(false);
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchBarOpen(false);
-      setSearchQuery('');
+    if (!email.trim()) return;
+
+    setStatus('loading');
+
+    try {
+      // Save subscriber to storage or dbEngine if implemented
+      const existing = JSON.parse(localStorage.getItem('dt_subscribers') || '[]');
+      existing.push({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        subscribedAt: new Date().toISOString()
+      });
+      localStorage.setItem('dt_subscribers', JSON.stringify(existing));
+
+      setStatus('success');
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setStatus('idle');
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      setStatus('idle');
     }
   };
 
-  const navClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm tracking-wider uppercase transition-colors ${isActive ? 'text-[#FFB300] font-medium' : 'text-[#3F3F46] hover:text-[#18181B]'}`;
-
   return (
-    <header className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DC]">
-      <div className="max-w-6xl mx-auto px-6 h-24 flex items-center justify-between">
-       <Link to="/" className="flex items-center">
-          <img 
-            src="/logo.png" 
-            alt="The Different Thought" 
-            className="h-14 sm:h-16 w-auto object-contain" 
-          />
-        </Link>
-
-        <nav className="hidden md:flex items-center space-x-8">
-          <NavLink to="/" end className={navClass}>Home</NavLink>
-          <NavLink to="/about" className={navClass}>Origin</NavLink>
-          <NavLink to="/categories" className={navClass}>Pillars</NavLink>
-          <NavLink to="/blog" className={navClass}>Thoughts</NavLink>
-          <NavLink to="/contact" className={navClass}>Reach Out</NavLink>
-        </nav>
-
-        <div className="flex items-center space-x-4">
-          <button onClick={() => setSearchBarOpen(!searchBarOpen)} className="p-2 text-[#52525B] hover:text-[#18181B]">
-            <Search className="w-5 h-5" />
-          </button>
-          <Link to="/contact" className="hidden sm:inline-flex items-center space-x-1.5 px-4 py-2 bg-[#18181B] text-[#FAF8F5] text-xs uppercase tracking-wider font-medium rounded-full hover:bg-[#FFB300] transition-colors">
-            <span>Subscribe</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+    <>
+      <header className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DC]">
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <img src="/logo.png" alt="The Different Thought" className="h-10 w-auto object-contain" />
           </Link>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-[#18181B]">
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
 
-      {searchBarOpen && (
-        <div className="bg-[#FAF8F5] border-b border-[#E8E3DC] px-6 py-4">
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto flex items-center gap-3">
-            <Search className="w-5 h-5 text-[#71717A]" />
-            <input
-              type="text"
-              placeholder="Search essays, thoughts, categories..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-transparent text-lg text-[#18181B] placeholder-[#A1A1AA] focus:outline-none"
-              autoFocus
-            />
-            <button type="submit" className="text-xs uppercase tracking-widest text-[#FFB300] font-semibold">Search</button>
-          </form>
-        </div>
-      )}
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-8 text-xs uppercase tracking-widest font-medium text-[#18181B]">
+            <Link to="/" className="hover:text-[#FFB300] transition">Home</Link>
+            <Link to="/about" className="hover:text-[#FFB300] transition">Origin</Link>
+            <Link to="/categories" className="hover:text-[#FFB300] transition">Pillars</Link>
+            <Link to="/blog" className="hover:text-[#FFB300] transition">Thoughts</Link>
+            <Link to="/contact" className="hover:text-[#FFB300] transition">Reach Out</Link>
+          </nav>
 
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#FAF8F5] border-b border-[#E8E3DC] px-6 py-6 space-y-4">
-          <div className="flex flex-col space-y-3 text-lg font-serif">
-            <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-            <Link to="/about" onClick={() => setMobileMenuOpen(false)}>Origin</Link>
-            <Link to="/categories" onClick={() => setMobileMenuOpen(false)}>Pillars</Link>
-            <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Thoughts</Link>
-            <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Reach Out</Link>
+          {/* Right Action: Subscribe Button */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-[#18181B] text-white hover:bg-black px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider transition uppercase flex items-center gap-1.5 shadow-sm"
+            >
+              Subscribe <span>&nearr;</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Subscribe Modal Backdrop & Dialog */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-md bg-[#FAF8F5] border border-[#E8E3DC] rounded-2xl p-8 shadow-2xl space-y-6">
+            
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-5 right-5 text-[#71717A] hover:text-[#18181B] text-xl font-semibold leading-none"
+              aria-label="Close"
+            >
+              &times;
+            </button>
+
+            {/* Header Text */}
+            <div className="space-y-2 text-center">
+              <h2 className="font-serif text-3xl font-bold text-[#18181B]">Join the Dispatch</h2>
+              <p className="text-sm text-[#52525B] leading-relaxed">
+                Essays on deliberate craft, quiet observations, and slow journeys — delivered straight to your inbox.
+              </p>
+            </div>
+
+            {status === 'success' ? (
+              <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-center text-sm font-medium">
+                Thank you for subscribing! Welcome aboard.
+              </div>
+            ) : (
+              <form onSubmit={handleSubscribe} className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Jane"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Doe"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="jane@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="w-full py-3 bg-[#18181B] hover:bg-black text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition disabled:opacity-50 mt-2"
+                >
+                  {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 };
 
@@ -525,7 +598,7 @@ export const Footer: React.FC = () => (
             <img
               src="/logo.png"
               alt="The Different Thought"
-              className="h-12 w-auto object-contain"
+              className="h-14 w-auto object-contain"
             />
           </Link>
           <p className="text-[#52525B] text-sm leading-relaxed max-w-md">
