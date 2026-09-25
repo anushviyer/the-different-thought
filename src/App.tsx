@@ -90,10 +90,12 @@ const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey && !supabase
 const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
 const SEED_CATEGORIES: Category[] = [
-  { id: 'cat-1', name: 'Thoughts & Perspectives', slug: 'thoughts', description: 'Reflections on modern living, deep attention, and deliberate slowing down.', image_url: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop' },
-  { id: 'cat-2', name: 'Travel & Wandering', slug: 'travel', description: 'Journeys through quiet alleys, train windows, and unfamiliar cultures.', image_url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1200&auto=format&fit=crop' },
-  { id: 'cat-3', name: 'Craft & Lifestyle', slug: 'lifestyle', description: 'Objects of character, ritual, tactile materials, and the beauty of analog simplicity.', image_url: 'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?q=80&w=1200&auto=format&fit=crop' },
-  { id: 'cat-4', name: 'Tech & Future', slug: 'technology', description: 'Examining our relationship with algorithms, screens, and intentional technology.', image_url: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop' }
+  { id: 'cat-1', name: 'Thoughts & Perspectives', slug: 'thoughts', description: 'Reflections on modern living, deep attention, and deliberate slowing down.' },
+  { id: 'cat-2', name: 'Travel & Wandering', slug: 'travel', description: 'Journeys through quiet alleys, train windows, and unfamiliar cultures.' },
+  { id: 'cat-3', name: 'Craft & Lifestyle', slug: 'lifestyle', description: 'Objects of character, ritual, tactile materials, and the beauty of analog simplicity.' },
+  { id: 'cat-4', name: 'Tech & Future', slug: 'technology', description: 'Examining our relationship with algorithms, screens, and intentional technology.' },
+  { id: 'cat-5', name: 'Design & Spaces', slug: 'design', description: 'Form, deliberate architecture, functional aesthetics, and mindful spaces.' },
+  { id: 'cat-6', name: 'Business & Ventures', slug: 'business', description: 'Entrepreneurship, practical strategy, and turning creative ideas into reality.' }
 ];
 
 const SEED_TAGS: Tag[] = [
