@@ -558,6 +558,15 @@ export const Footer: React.FC = () => (
   </footer>
 );
 
+export const PublicLayout: React.FC = () => (
+  <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#18181B]">
+    <Header />
+    <main className="flex-grow">
+      <Outlet />
+    </main>
+    <Footer />
+  </div>
+);
 /* ==========================================================================
    5. PUBLIC PAGES
    ========================================================================== */
