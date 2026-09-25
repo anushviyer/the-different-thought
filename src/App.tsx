@@ -598,7 +598,7 @@ export const Footer: React.FC = () => (
             <img
               src="/logo.png"
               alt="The Different Thought"
-              className="h-18 w-auto object-contain"
+              className="h-14 w-auto object-contain"
             />
           </Link>
           <p className="text-[#52525B] text-sm leading-relaxed max-w-md">
