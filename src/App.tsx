@@ -447,15 +447,17 @@ export const Header: React.FC = () => {
     setStatus('loading');
 
     try {
-      // Save subscriber to storage or dbEngine if implemented
-      const existing = JSON.parse(localStorage.getItem('dt_subscribers') || '[]');
-      existing.push({
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        email: email.trim(),
-        subscribedAt: new Date().toISOString()
+      const res = await fetch('/api/subscribers.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email.trim()
+        })
       });
-      localStorage.setItem('dt_subscribers', JSON.stringify(existing));
+
+      if (!res.ok) throw new Error('Subscription failed');
 
       setStatus('success');
       setTimeout(() => {
@@ -468,6 +470,7 @@ export const Header: React.FC = () => {
     } catch (err) {
       console.error(err);
       setStatus('idle');
+      alert('Could not complete subscription. Please try again.');
     }
   };
 
@@ -475,12 +478,10 @@ export const Header: React.FC = () => {
     <>
       <header className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DC]">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="flex items-center">
             <img src="/logo.png" alt="The Different Thought" className="h-16 w-auto object-contain" />
           </Link>
 
-          {/* Navigation Links */}
           <nav className="hidden md:flex items-center space-x-8 text-xs uppercase tracking-widest font-medium text-[#18181B]">
             <Link to="/" className="hover:text-[#FFB300] transition">Home</Link>
             <Link to="/about" className="hover:text-[#FFB300] transition">Origin</Link>
@@ -489,7 +490,6 @@ export const Header: React.FC = () => {
             <Link to="/contact" className="hover:text-[#FFB300] transition">Reach Out</Link>
           </nav>
 
-          {/* Right Action: Subscribe Button */}
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setIsModalOpen(true)}
@@ -501,22 +501,18 @@ export const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Subscribe Modal Backdrop & Dialog */}
+      {/* Subscription Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="relative w-full max-w-md bg-[#FAF8F5] border border-[#E8E3DC] rounded-2xl p-8 shadow-2xl space-y-6">
-            
-            {/* Close Button */}
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
               className="absolute top-5 right-5 text-[#71717A] hover:text-[#18181B] text-xl font-semibold leading-none"
-              aria-label="Close"
             >
               &times;
             </button>
 
-            {/* Header Text */}
             <div className="space-y-2 text-center">
               <h2 className="font-serif text-3xl font-bold text-[#18181B]">Join the Dispatch</h2>
               <p className="text-sm text-[#52525B] leading-relaxed">
@@ -532,9 +528,7 @@ export const Header: React.FC = () => {
               <form onSubmit={handleSubscribe} className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">
-                      First Name
-                    </label>
+                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">First Name</label>
                     <input
                       type="text"
                       required
@@ -545,9 +539,7 @@ export const Header: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">
-                      Last Name
-                    </label>
+                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">Last Name</label>
                     <input
                       type="text"
                       required
@@ -560,9 +552,7 @@ export const Header: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">
-                    Email Address
-                  </label>
+                  <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">Email Address</label>
                   <input
                     type="email"
                     required
