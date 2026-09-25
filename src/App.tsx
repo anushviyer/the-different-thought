@@ -1483,7 +1483,82 @@ export const AdminCategoriesPage: React.FC = () => {
   );
 };
 export const AdminTagsPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Tags</h1><p className="text-sm">Manage taxonomy keywords.</p></div>;
-export const AdminSubscribersPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Subscribers</h1><p className="text-sm">View audience subscriptions.</p></div>;
+export const AdminSubscribersPage: React.FC = () => {
+  const [subscribers, setSubscribers] = useState<Array<{ id: string; first_name: string; last_name: string; email: string; created_at: string }>>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchSubscribers = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/subscribers.php');
+      if (res.ok) {
+        const data = await res.json();
+        setSubscribers(data);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubscribers();
+  }, []);
+
+  return (
+    <div className="space-y-8 max-w-5xl">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-serif text-3xl font-bold text-[#18181B]">Subscribers</h1>
+          <p className="text-sm text-[#71717A] mt-1">View audience subscriptions.</p>
+        </div>
+        <button
+          onClick={fetchSubscribers}
+          className="text-xs font-semibold uppercase tracking-wider px-4 py-2 border border-[#E8E3DC] bg-white rounded-lg hover:border-[#18181B] transition"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <div className="bg-white border border-[#E8E3DC] rounded-xl overflow-hidden shadow-sm">
+        {loading ? (
+          <div className="p-8 text-center text-sm text-[#71717A]">Loading subscribers...</div>
+        ) : subscribers.length === 0 ? (
+          <div className="p-8 text-center text-sm text-[#71717A]">No subscribers found yet.</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-[#E8E3DC] bg-[#FAF8F5] text-xs uppercase tracking-wider text-[#71717A]">
+                  <th className="py-3 px-6 font-semibold">Name</th>
+                  <th className="py-3 px-6 font-semibold">Email</th>
+                  <th className="py-3 px-6 font-semibold">Joined Date</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E8E3DC]">
+                {subscribers.map((sub) => (
+                  <tr key={sub.id} className="hover:bg-[#FAF8F5]/50 transition">
+                    <td className="py-3.5 px-6 font-medium text-[#18181B]">
+                      {sub.first_name || sub.last_name ? `${sub.first_name} ${sub.last_name}`.trim() : '—'}
+                    </td>
+                    <td className="py-3.5 px-6 text-[#52525B] font-mono text-xs">
+                      {sub.email}
+                    </td>
+                    <td className="py-3.5 px-6 text-xs text-[#71717A]">
+                      {new Date(sub.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export const AdminAboutPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">About Page CMS</h1><p className="text-sm">Edit your narrative biography and philosophy directly.</p></div>;
 export const AdminSettingsPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Site Settings</h1><p className="text-sm">Update publication title, tagline, and contact info.</p></div>;
 
