@@ -1484,7 +1484,7 @@ export const AdminCategoriesPage: React.FC = () => {
 };
 export const AdminTagsPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Tags</h1><p className="text-sm">Manage taxonomy keywords.</p></div>;
 export const AdminSubscribersPage: React.FC = () => {
-  const [subscribers, setSubscribers] = useState<Array<{ id: string; first_name: string; last_name: string; email: string; created_at: string }>>([]);
+  const [subscribers, setSubscribers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchSubscribers = async () => {
@@ -1493,7 +1493,7 @@ export const AdminSubscribersPage: React.FC = () => {
       const res = await fetch('/subscribers.php');
       if (res.ok) {
         const data = await res.json();
-        setSubscribers(data);
+        setSubscribers(Array.isArray(data) ? data : []);
       }
     } catch (e) {
       console.error(e);
@@ -1505,6 +1505,16 @@ export const AdminSubscribersPage: React.FC = () => {
   useEffect(() => {
     fetchSubscribers();
   }, []);
+
+  const formatDate = (dateVal: any) => {
+    if (!dateVal) return '—';
+    const d = new Date(dateVal);
+    return isNaN(d.getTime()) ? String(dateVal) : d.toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
 
   return (
     <div className="space-y-8 max-w-5xl">
@@ -1537,19 +1547,27 @@ export const AdminSubscribersPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E8E3DC]">
-                {subscribers.map((sub) => (
-                  <tr key={sub.id} className="hover:bg-[#FAF8F5]/50 transition">
-                    <td className="py-3.5 px-6 font-medium text-[#18181B]">
-                      {sub.first_name || sub.last_name ? `${sub.first_name} ${sub.last_name}`.trim() : '—'}
-                    </td>
-                    <td className="py-3.5 px-6 text-[#52525B] font-mono text-xs">
-                      {sub.email}
-                    </td>
-                    <td className="py-3.5 px-6 text-xs text-[#71717A]">
-                      {new Date(sub.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
-                    </td>
-                  </tr>
-                ))}
+                {subscribers.map((sub, idx) => {
+                  const firstName = sub.first_name || sub.firstName || '';
+                  const lastName = sub.last_name || sub.lastName || '';
+                  const fullName = `${firstName} ${lastName}`.trim() || 'Anonymous';
+                  const email = sub.email || '—';
+                  const dateStr = formatDate(sub.created_at || sub.createdAt || sub.subscribedAt || sub.date);
+
+                  return (
+                    <tr key={sub.id || idx} className="hover:bg-[#FAF8F5]/50 transition">
+                      <td className="py-3.5 px-6 font-medium text-[#18181B]">
+                        {fullName}
+                      </td>
+                      <td className="py-3.5 px-6 text-[#52525B] font-mono text-xs">
+                        {email}
+                      </td>
+                      <td className="py-3.5 px-6 text-xs text-[#71717A]">
+                        {dateStr}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
