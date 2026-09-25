@@ -523,7 +523,7 @@ export const Footer: React.FC = () => (
             <img
               src="/logo.png"
               alt="The Different Thought"
-              className="h-10 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
           </Link>
           <p className="text-[#52525B] text-sm leading-relaxed max-w-md">
