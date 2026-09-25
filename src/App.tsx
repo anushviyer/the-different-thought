@@ -1292,6 +1292,34 @@ export const AdminArticleEditor: React.FC = () => {
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    setUploading(true);
+    try {
+      const res = await fetch('/upload.php', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (res.ok && data.status === 'success') {
+        setCoverUrl(data.url);
+      } else {
+        alert(data.message || 'Image upload failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to upload image. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     if (!isNew && id) {
@@ -1329,7 +1357,37 @@ export const AdminArticleEditor: React.FC = () => {
         <input type="text" placeholder="Title" value={title} onChange={e=>setTitle(e.target.value)} className="w-full font-serif text-2xl p-2 border-b focus:outline-none" />
         <input type="text" placeholder="Slug" value={slug} onChange={e=>setSlug(e.target.value)} className="w-full text-xs font-mono p-2 border rounded" />
         <textarea rows={2} placeholder="Excerpt" value={excerpt} onChange={e=>setExcerpt(e.target.value)} className="w-full text-sm p-2 border rounded" />
-        <input type="text" placeholder="Cover Image URL" value={coverUrl} onChange={e=>setCoverUrl(e.target.value)} className="w-full text-xs p-2 border rounded" />
+        <div className="space-y-2 pt-1 pb-1">
+          <div className="flex items-center gap-3">
+            <label className="cursor-pointer px-4 py-2 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-lg hover:bg-neutral-800 transition shrink-0">
+              {uploading ? 'Uploading...' : 'Upload Image'}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+                disabled={uploading}
+              />
+            </label>
+            <input
+              type="text"
+              placeholder="Or enter Cover Image URL directly"
+              value={coverUrl}
+              onChange={e => setCoverUrl(e.target.value)}
+              className="w-full text-xs font-mono p-2 border rounded-lg"
+            />
+          </div>
+
+          {coverUrl && (
+            <div className="relative w-40 h-24 rounded-lg overflow-hidden border border-[#E8E3DC] mt-2">
+              <img
+                src={coverUrl}
+                alt="Cover Preview"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+        </div>
         <textarea rows={14} placeholder="Content in HTML" value={content} onChange={e=>setContent(e.target.value)} className="w-full font-mono text-sm p-3 border rounded" />
       </div>
     </div>
