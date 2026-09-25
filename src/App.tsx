@@ -516,7 +516,8 @@ export const Header: React.FC = () => {
 
 export const Footer: React.FC = () => (
   <footer className="bg-[#FAF8F5] border-t border-[#E8E3DC] pt-16 pb-12 mt-20">
-   <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#E8E3DC]">
+    <div className="max-w-6xl mx-auto px-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#E8E3DC]">
         <div className="md:col-span-6 space-y-4">
           <Link to="/" className="inline-block">
             <img
@@ -529,6 +530,7 @@ export const Footer: React.FC = () => (
             An independent digital journal committed to examining everyday realities, slow journeys, deliberate craft, and unconventional viewpoints.
           </p>
         </div>
+
         <div className="md:col-span-3 space-y-3">
           <div className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">Explore</div>
           <ul className="space-y-2 text-sm text-[#3F3F46]">
@@ -538,6 +540,7 @@ export const Footer: React.FC = () => (
             <li><Link to="/contact" className="hover:text-[#FFB300]">Contact</Link></li>
           </ul>
         </div>
+
         <div className="md:col-span-3 space-y-3">
           <div className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">Gateway</div>
           <ul className="space-y-2 text-sm text-[#3F3F46]">
@@ -547,20 +550,14 @@ export const Footer: React.FC = () => (
           </ul>
         </div>
       </div>
+
       <div className="pt-8 text-center text-xs text-[#71717A]">
-        © {new Date().getFullYear()} The Different Thought. Written with deliberate focus.
+        &copy; {new Date().getFullYear()} The Different Thought. Written with deliberate focus.
       </div>
     </div>
   </footer>
 );
 };
-export const PublicLayout: React.FC = () => (
-  <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#18181B]">
-    <Header />
-    <main className="flex-grow"><Outlet /></main>
-    <Footer />
-  </div>
-);
 
 /* ==========================================================================
    5. PUBLIC PAGES
