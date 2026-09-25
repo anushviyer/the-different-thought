@@ -952,20 +952,119 @@ export const SearchPage: React.FC = () => {
 };
 
 export const ContactPage: React.FC = () => {
-  const [sent, setSent] = useState(false);
   return (
-    <div className="max-w-md mx-auto px-6 py-16 space-y-6">
-      <h1 className="font-serif text-3xl font-bold text-[#18181B]">Correspondence</h1>
-      {sent ? (
-        <p className="text-sm text-green-700 bg-green-50 p-4 rounded-xl">Thank you. Note received.</p>
-      ) : (
-        <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="space-y-4">
-          <input type="text" required placeholder="Name" className="w-full p-3 bg-white border border-[#E8E3DC] rounded-lg text-sm" />
-          <input type="email" required placeholder="Email" className="w-full p-3 bg-white border border-[#E8E3DC] rounded-lg text-sm" />
-          <textarea rows={4} required placeholder="Message" className="w-full p-3 bg-white border border-[#E8E3DC] rounded-lg text-sm" />
-          <button type="submit" className="w-full py-3 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-lg hover:bg-[#FFB300]">Send</button>
-        </form>
-      )}
+    <div className="max-w-4xl mx-auto px-6 py-16 space-y-16">
+      {/* Intro Header */}
+      <section className="space-y-4">
+        <h1 className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-[#18181B]">
+          Let's Connect.
+        </h1>
+        <p className="text-lg md:text-xl text-[#3F3F46] font-medium leading-relaxed">
+          Good conversations usually start with a simple hello.
+        </p>
+        <p className="text-[#52525B] leading-relaxed max-w-2xl">
+          Whether you want to share a thought, talk about something I've written, suggest an idea, or simply say hello — I'd love to hear from you.
+        </p>
+      </section>
+
+      {/* Direct Contact Banner */}
+      <section className="p-8 bg-white border border-[#E8E3DC] rounded-2xl shadow-sm space-y-3">
+        <span className="text-xs uppercase tracking-widest font-semibold text-[#71717A] block">
+          Write To Me
+        </span>
+        <a 
+          href="mailto:hello@thedifferentthought.com"
+          className="inline-flex items-center text-xl md:text-2xl font-serif font-bold text-[#18181B] hover:text-[#FFB300] transition"
+        >
+          hello@thedifferentthought.com &rarr;
+        </a>
+      </section>
+
+      {/* Grid: What can you reach out about? */}
+      <section className="space-y-6">
+        <h2 className="font-serif text-2xl font-bold text-[#18181B]">
+          What can you reach out about?
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="p-6 bg-white border border-[#E8E3DC] rounded-xl space-y-2">
+            <h3 className="font-serif text-lg font-bold text-[#18181B]">A Thought</h3>
+            <p className="text-sm text-[#52525B] leading-relaxed">
+              Have something to discuss, challenge or add to something I've written?
+            </p>
+          </div>
+
+          <div className="p-6 bg-white border border-[#E8E3DC] rounded-xl space-y-2">
+            <h3 className="font-serif text-lg font-bold text-[#18181B]">A Story</h3>
+            <p className="text-sm text-[#52525B] leading-relaxed">
+              Know a place, person or experience worth exploring?
+            </p>
+          </div>
+
+          <div className="p-6 bg-white border border-[#E8E3DC] rounded-xl space-y-2">
+            <h3 className="font-serif text-lg font-bold text-[#18181B]">A Collaboration</h3>
+            <p className="text-sm text-[#52525B] leading-relaxed">
+              Have an interesting idea or project in mind? Let's talk.
+            </p>
+          </div>
+
+          <div className="p-6 bg-white border border-[#E8E3DC] rounded-xl space-y-2">
+            <h3 className="font-serif text-lg font-bold text-[#18181B]">Just Say Hello</h3>
+            <p className="text-sm text-[#52525B] leading-relaxed">
+              No particular reason needed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Social / Elsewhere */}
+      <section className="pt-8 border-t border-[#E8E3DC] space-y-4">
+        <h3 className="text-xs uppercase tracking-widest font-semibold text-[#71717A]">
+          Find Me Elsewhere
+        </h3>
+        <div className="flex flex-wrap gap-4 text-sm font-medium text-[#18181B]">
+          <a 
+            href="https://www.instagram.com/anushiyer27/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-[#FFB300] transition"
+          >
+            Instagram
+          </a>
+          <span className="text-[#A1A1AA]">&middot;</span>
+          <a 
+            href="https://www.linkedin.com/in/anush-iyer-93a6bb95/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-[#FFB300] transition"
+          >
+            LinkedIn
+          </a>
+          <span className="text-[#A1A1AA]">&middot;</span>
+          <a 
+            href="https://www.facebook.com/anush.v.iyer/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-[#FFB300] transition"
+          >
+            Facebook
+          </a>
+        </div>
+      </section>
+
+      {/* Sign-off Quote & Secondary Email */}
+      <section className="p-8 bg-[#FAF8F5] border border-[#E8E3DC] rounded-2xl text-center space-y-3">
+        <p className="font-serif italic text-lg md:text-xl text-[#18181B]">
+          "Different thoughts are better when they're shared."
+        </p>
+        <div>
+          <a 
+            href="mailto:hello@thedifferentthought.com"
+            className="inline-block text-sm font-semibold text-[#18181B] hover:text-[#FFB300] transition"
+          >
+            hello@thedifferentthought.com &rarr;
+          </a>
+        </div>
+      </section>
     </div>
   );
 };
