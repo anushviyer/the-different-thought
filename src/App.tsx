@@ -477,7 +477,7 @@ export const Header: React.FC = () => {
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src="/logo.png" alt="The Different Thought" className="h-10 w-auto object-contain" />
+            <img src="/logo.png" alt="The Different Thought" className="h-16 w-auto object-contain" />
           </Link>
 
           {/* Navigation Links */}
@@ -495,7 +495,7 @@ export const Header: React.FC = () => {
               onClick={() => setIsModalOpen(true)}
               className="bg-[#18181B] text-white hover:bg-black px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider transition uppercase flex items-center gap-1.5 shadow-sm"
             >
-              Subscribe <span>&nearr;</span>
+              Subscribe
             </button>
           </div>
         </div>
@@ -598,7 +598,7 @@ export const Footer: React.FC = () => (
             <img
               src="/logo.png"
               alt="The Different Thought"
-              className="h-14 w-auto object-contain"
+              className="h-18 w-auto object-contain"
             />
           </Link>
           <p className="text-[#52525B] text-sm leading-relaxed max-w-md">
