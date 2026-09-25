@@ -828,7 +828,6 @@ export const AboutPage: React.FC = () => {
   if (!author) return null;
 
   return (
-    return (
     <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
       <div className="flex flex-col sm:flex-row gap-8 items-center">
         <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 border border-[#E8E3DC]">
