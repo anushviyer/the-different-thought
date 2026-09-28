@@ -179,8 +179,10 @@ async saveArticle(article: Partial<Article>): Promise<Article> {
       title: article.title || 'Untitled',
       slug: article.slug || ('story-' + Date.now()),
       excerpt: article.excerpt || '',
-      // Base64 encode to prevent server firewalls/ModSecurity from stripping the body:
-      content: btoa(unescape(encodeURIComponent(article.content || ''))),
+      // Safe base64 encoding that handles UTF-8 / special characters
+      content: btoa(encodeURIComponent(article.content || '').replace(/%([0-9A-F]{2})/g, (_, p1) =>
+        String.fromCharCode(parseInt(p1, 16))
+      )),
       content_is_base64: true,
       cover_image_url: article.cover_image_url || '',
       category_id: article.category?.id || article.category_id || '',
@@ -191,7 +193,10 @@ async saveArticle(article: Partial<Article>): Promise<Article> {
       reading_time: article.reading_time || '4 min read',
     };
 
-    const res = await fetch(`${window.location.origin}/articles.php`, {
+    // Use full current origin to prevent any HTTP -> HTTPS redirect stripping the body
+    const targetUrl = `${window.location.origin}/articles.php`;
+
+    const res = await fetch(targetUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -207,6 +212,7 @@ async saveArticle(article: Partial<Article>): Promise<Article> {
     const result = await res.json();
     return result.article || payload;
   },
+  
   async deleteArticle(id: string): Promise<void> {
     try {
       const res = await fetch(`/articles.php?id=${encodeURIComponent(id)}`, {
