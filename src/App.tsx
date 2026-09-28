@@ -696,28 +696,27 @@ export const HomePage: React.FC = () => {
       {featured && (
         <section className="px-6 max-w-6xl mx-auto">
           <div className="border-t border-[#E8E3DC] pt-12 mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">Featured Monograph</span>
+            <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">Featured Monogram</span>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-2xl border border-[#E8E3DC] p-6 sm:p-8">
             <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-xl">
               <img src={featured.cover_image_url} alt={featured.title} className="w-full h-full object-cover" />
+            </div>
             <div className="lg:col-span-5 space-y-4">
               <div className="text-xs text-[#71717A] flex items-center gap-2">
-  <div className="text-xs text-[#71717A] flex items-center gap-2">
-  {featured.category && (
-    <span className="px-2 py-0.5 bg-[#FAF8F5] border border-[#E8E3DC] text-[10px] uppercase font-bold tracking-wider rounded text-[#18181B]">
-      {featured.category.name}
-    </span>
-  )}
-  <span>{featured.reading_time}</span>
-</div>
+                {featured.category && (
+                  <span className="px-2 py-0.5 bg-[#FAF8F5] border border-[#E8E3DC] text-[10px] uppercase font-bold tracking-wider rounded text-[#18181B]">
+                    {featured.category.name}
+                  </span>
+                )}
+                <span>{featured.reading_time}</span>
+              </div>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">
                 <Link to={`/blog/${featured.slug}`} className="hover:text-[#FFB300] transition-colors">{featured.title}</Link>
               </h2>
               <p className="text-[#52525B] text-sm leading-relaxed">{featured.excerpt}</p>
               <Link to={`/blog/${featured.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[#18181B] hover:text-[#FFB300]">
                 <span>Read Full Essay</span>
-                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
