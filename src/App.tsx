@@ -1299,30 +1299,44 @@ export const AdminArticleEditor: React.FC = () => {
     if (!file) return;
 
     setUploading(true);
-    try {
-      const res = await fetch('/upload.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': file.type || 'application/octet-stream',
-          'X-File-Name': file.name,
-        },
-        body: file,
-      });
 
-      const data = await res.json();
-      if (res.ok && data.status === 'success') {
-        setCoverUrl(data.url);
-      } else {
-        alert(data.message || 'Image upload failed');
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64String = reader.result as string;
+
+        const res = await fetch('/upload.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            filename: file.name,
+            data: base64String,
+          }),
+        });
+
+        const data = await res.json();
+        if (res.ok && data.status === 'success') {
+          setCoverUrl(data.url);
+        } else {
+          alert(data.message || 'Image upload failed');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Failed to upload image. Please try again.');
+      } finally {
+        setUploading(false);
       }
-    } catch (err) {
-      console.error(err);
-      alert('Failed to upload image. Please try again.');
-    } finally {
-      setUploading(false);
-    }
-  };
+    };
 
+    reader.onerror = () => {
+      alert('Error reading file.');
+      setUploading(false);
+    };
+
+    reader.readAsDataURL(file);
+  };
   useEffect(() => {
     if (!isNew && id) {
       dbEngine.getArticles().then(arts => {
