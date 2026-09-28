@@ -1408,6 +1408,7 @@ export const AdminArticleEditor: React.FC = () => {
     });
     navigate('/admin/articles');
   };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -1417,19 +1418,20 @@ export const AdminArticleEditor: React.FC = () => {
           <button onClick={() => handleSave('published')} className="px-4 py-2 bg-[#18181B] text-white rounded-lg text-xs uppercase font-semibold">Publish</button>
         </div>
       </div>
+
       <div className="space-y-4 bg-white p-6 border rounded-xl">
-        <input type="text" placeholder="Title" value={title} onChange={e=>setTitle(e.target.value)} className="w-full font-serif text-2xl p-2 border-b focus:outline-none" />
-        <input type="text" placeholder="Slug" value={slug} onChange={e=>setSlug(e.target.value)} className="w-full text-xs font-mono p-2 border rounded" />
-        <textarea rows={2} placeholder="Excerpt" value={excerpt} onChange={e=>setExcerpt(e.target.value)} className="w-full text-sm p-2 border rounded" />
+        <input type="text" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} className="w-full font-serif text-2xl p-2 border-b focus:outline-none" />
+        <input type="text" placeholder="Slug" value={slug} onChange={e => setSlug(e.target.value)} className="w-full text-xs font-mono p-2 border rounded" />
+        <textarea rows={2} placeholder="Excerpt" value={excerpt} onChange={e => setExcerpt(e.target.value)} className="w-full text-sm p-2 border rounded" />
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center bg-[#FBFBFA] p-4 rounded-lg border border-[#E8E3DC]">
-          {/* Category Selection */}
           <div>
             <label className="block text-xs uppercase tracking-wider font-semibold text-[#71717A] mb-1">
               Category
             </label>
             <select
               value={selectedCategoryId}
-              onChange={(e) => setSelectedCategoryId(e.target.value)}
+              onChange={e => setSelectedCategoryId(e.target.value)}
               className="w-full text-sm bg-white p-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:border-[#18181B]"
             >
               <option value="">Select a Category</option>
@@ -1441,13 +1443,12 @@ export const AdminArticleEditor: React.FC = () => {
             </select>
           </div>
 
-          {/* Featured Monogram Toggle */}
           <div className="flex items-center gap-3 pt-4 md:pt-2">
             <input
               type="checkbox"
               id="featuredMonogram"
               checked={isFeaturedMonogram}
-              onChange={(e) => setIsFeaturedMonogram(e.target.checked)}
+              onChange={e => setIsFeaturedMonogram(e.target.checked)}
               className="w-4 h-4 text-[#18181B] border-gray-300 rounded focus:ring-[#18181B] cursor-pointer"
             />
             <label htmlFor="featuredMonogram" className="text-xs uppercase tracking-wider font-semibold text-[#18181B] cursor-pointer select-none">
@@ -1455,6 +1456,7 @@ export const AdminArticleEditor: React.FC = () => {
             </label>
           </div>
         </div>
+
         <div className="space-y-2 pt-1 pb-1">
           <div className="flex items-center gap-3">
             <label className="cursor-pointer px-4 py-2 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-lg hover:bg-neutral-800 transition shrink-0">
@@ -1471,26 +1473,27 @@ export const AdminArticleEditor: React.FC = () => {
               type="text"
               placeholder="Or enter Cover Image URL directly"
               value={coverUrl}
-              onChange={(e) => setCoverUrl(e.target.value)}
+              onChange={e => setCoverUrl(e.target.value)}
               className="w-full text-xs font-mono p-2 border rounded-lg"
             />
           </div>
 
-         {coverUrl && (
-        <div className="relative w-40 h-24 rounded-lg overflow-hidden border border-[#E8E3DC] mt-2">
-          <img
-            src={coverUrl}
-            alt="Cover Preview"
-            className="w-full h-full object-cover"
-          />
+          {coverUrl && (
+            <div className="relative w-40 h-24 rounded-lg overflow-hidden border border-[#E8E3DC] mt-2">
+              <img
+                src={coverUrl}
+                alt="Cover Preview"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
         </div>
-      )}
 
-    <textarea
+        <textarea
           rows={14}
           placeholder="Content in HTML"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={e => setContent(e.target.value)}
           className="w-full font-mono text-sm p-4 border border-[#E8E3DC] rounded-xl focus:outline-none focus:border-[#18181B]"
         />
       </div>
