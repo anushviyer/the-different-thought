@@ -1304,8 +1304,8 @@ export const AdminArticleEditor: React.FC = () => {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = async () => {
-        // Resize to a maximum width of 1600px for sharp web covers
-        const maxWidth = 1600;
+        // Shrink the image to a max width of 1200px so it is fast and tiny
+        const maxWidth = 1200;
         let width = img.width;
         let height = img.height;
 
@@ -1320,26 +1320,24 @@ export const AdminArticleEditor: React.FC = () => {
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
-          alert('Could not process image');
           setUploading(false);
           return;
         }
 
         ctx.drawImage(img, 0, 0, width, height);
+        
+        // Convert canvas back to a lightweight JPEG string
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
 
-        // Convert to high-quality JPEG
-        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+        // Append it as a normal text field (NOT as a file)
+        const formData = new FormData();
+        formData.append('image_base64', compressedBase64);
 
         try {
           const res = await fetch('/upload.php', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              filename: file.name.replace(/\.[^/.]+$/, "") + '.jpg',
-              data: compressedBase64,
-            }),
+            // Do NOT set headers. Let the browser auto-set the boundary for FormData.
+            body: formData,
           });
 
           const data = await res.json();
@@ -1350,7 +1348,7 @@ export const AdminArticleEditor: React.FC = () => {
           }
         } catch (err) {
           console.error(err);
-          alert('Failed to upload image. Please try again.');
+          alert('Failed to upload image. Server rejected the request.');
         } finally {
           setUploading(false);
         }
@@ -1360,7 +1358,7 @@ export const AdminArticleEditor: React.FC = () => {
     };
 
     reader.onerror = () => {
-      alert('Error reading file.');
+      alert('Failed to read the file locally.');
       setUploading(false);
     };
 
