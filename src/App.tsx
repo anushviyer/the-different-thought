@@ -659,23 +659,38 @@ setLatest(pub);
   }, []);
 
   const handleSub = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!subEmail) return;
-  setSubStatus('loading');
-  try {
-    const res = await dbEngine.addSubscriber(subEmail, `${firstName} ${lastName}`.trim());
-    setSubStatus('success');
-    setTimeout(() => {
-      setIsModalOpen(false);
+    e.preventDefault();
+    if (!subEmail.trim()) return;
+
+    setSubStatus('loading');
+
+    try {
+      const res = await fetch('/subscribers.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: subEmail.trim()
+        })
+      });
+
+      if (!res.ok) throw new Error('Subscription failed');
+
+      setSubStatus('success');
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setSubStatus('idle');
+        setFirstName('');
+        setLastName('');
+        setSubEmail('');
+      }, 2000);
+    } catch (err) {
+      console.error(err);
       setSubStatus('idle');
-      setFirstName('');
-      setLastName('');
-      setSubEmail('');
-    }, 2000);
-  } catch (err) {
-    setSubStatus('error');
-  }
-};
+      alert('Could not complete subscription. Please try again.');
+    }
+  };
 const featured = displayedFeatured[0];
   
   return (
