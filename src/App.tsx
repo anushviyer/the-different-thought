@@ -1624,7 +1624,7 @@ export const AboutPage: React.FC = () => {
         </p>
 
         <p>
-          The Different Thought is where I bring these interests together. From travel and design to business, technology and everyday observations, this is a space for sharing ideas, exploring perspectives and looking at familiar things a little differently. After all, there&apos;s always another way to see things.
+          The <strong className="font-bold text-[#18181B]">Different Thought</strong> is where I bring these interests together. From travel and design to business, technology and everyday observations, this is a space for sharing ideas, exploring perspectives and looking at familiar things a little differently. After all, there&apos;s always another way to see things.
         </p>
       </div>
     </div>
