@@ -104,42 +104,7 @@ const SEED_TAGS: Tag[] = [
   { id: 'tag-3', name: 'Creativity', slug: 'creativity' }
 ];
 
-const SEED_ARTICLES: Article[] = [
-  {
-    id: 'art-1',
-    title: 'The Art of the Unplanned Train Journey: Finding Calm in Unscheduled Hours',
-    slug: 'art-of-unplanned-train-journey',
-    excerpt: 'Why moving without an itinerary turns ordinary landscapes into profound personal meditations.',
-    content: `<h2>The Velocity of Looking</h2><p>Modern travel has become an exercise in optimization. We benchmark flights, cross-check TripAdvisor ratings, pin seventy-four places on digital maps, and ensure every ninety-minute window contains an edible or architectural highlight.</p><p>Last spring, I took an early morning train departing from a damp platform without reserving a hotel at the destination. The rhythmic clack of the wheels against steel tracks created an unexpected rhythm in my head — one that banished the urge to refresh email feeds.</p><blockquote>"The journey begins only when our anticipation of the end dissolves."</blockquote><h2>What We Notice When We Are Not in a Hurry</h2><p>As the locomotive curved around misty valleys, strangers began chatting without the calculated urgency of networking. An older woman was peeling oranges and offering wedges to a student studying architecture. Light fell in soft, geometric slivers across worn velour seats.</p><p>We do not travel to check boxes; we travel to let the strange and the quiet reshape our internal weather.</p>`,
-    cover_image_url: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?q=80&w=1600&auto=format&fit=crop',
-    category_id: 'cat-2',
-    status: 'published',
-    featured: true,
-    author_name: 'Anush',
-    reading_time: '5 min read',
-    views: 1420,
-    created_at: new Date(Date.now() - 172800000).toISOString(),
-    updated_at: new Date(Date.now() - 172800000).toISOString(),
-    published_at: new Date(Date.now() - 172800000).toISOString()
-  },
-  {
-    id: 'art-2',
-    title: 'The Quiet Radicalism of Finishing One Book Before Buying Another',
-    slug: 'quiet-radicalism-of-finishing-one-book',
-    excerpt: 'How resisting the collector impulse restored my capacity for sustained contemplation.',
-    content: `<h2>The Tsundoku Dilemma</h2><p>There is a lovely Japanese word, <em>tsundoku</em>, which refers to the habit of acquiring books and piling them up unread. For years, I treated my bookshelf as a showroom of aspirational identities.</p><p>Then came the realization: collecting books is a consumer act; reading them is an intellectual and spiritual one.</p><h2>The Single-Volume Experiment</h2><p>For six months, I instituted a strict rule: not a single book could be purchased, downloaded, or borrowed until the current volume was read front to back, annotated with a pencil, and digested.</p><p>What followed was an unexpected deepening of attention. When you know there is no backup entertainment sitting on the coffee table, you engage deeply with difficult chapters.</p>`,
-    cover_image_url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=1600&auto=format&fit=crop',
-    category_id: 'cat-1',
-    status: 'published',
-    featured: false,
-    author_name: 'Anush',
-    reading_time: '4 min read',
-    views: 890,
-    created_at: new Date(Date.now() - 345600000).toISOString(),
-    updated_at: new Date(Date.now() - 345600000).toISOString(),
-    published_at: new Date(Date.now() - 345600000).toISOString()
-  }
-];
+const SEED_ARTICLES: Article[] = [];
 
 const SEED_AUTHOR: AuthorProfile = {
   name: 'Anush',
@@ -180,9 +145,23 @@ function setStorage<T>(key: string, value: T): void {
 
 export const dbEngine = {
   async getArticles(): Promise<Article[]> {
-    if (isSupabaseConfigured && supabase) {
-      const { data, error } = await supabase.from('articles').select('*, category:categories(*)').order('created_at', { ascending: false });
-      if (!error && data) return data as Article[];
+    try {
+      const res = await fetch(`/articles.php?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          const categories = await this.getCategories();
+          return data.map((art: any) => ({
+            ...art,
+            category: categories.find(c => c.id === (art.category_id || art.category?.id)) || art.category
+          }));
+        }
+      }
+    } catch (err) {
+      console.error('Failed to load articles from server:', err);
     }
     const articles = getStorage<Article[]>('articles', SEED_ARTICLES);
     const categories = await this.getCategories();
@@ -195,49 +174,69 @@ export const dbEngine = {
   },
 
   async saveArticle(article: Partial<Article>): Promise<Article> {
-    const articles = await this.getArticles();
-    let saved: Article;
-    if (article.id) {
-      const index = articles.findIndex(a => a.id === article.id);
-      if (index >= 0) {
-        saved = { ...articles[index], ...article, updated_at: new Date().toISOString() } as Article;
-        articles[index] = saved;
+    const payload = {
+      id: article.id || undefined,
+      title: article.title || 'Untitled',
+      slug: article.slug || ('story-' + Date.now()),
+      excerpt: article.excerpt || '',
+      content: article.content || '',
+      cover_image_url: article.cover_image_url || '',
+      category_id: article.category?.id || article.category_id || '',
+      category: article.category,
+      status: article.status || 'draft',
+      featured: article.featured || false,
+      author_name: article.author_name || 'Anush',
+      reading_time: article.reading_time || '4 min read',
+    };
+
+    try {
+      const res = await fetch('/articles.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error('Failed to save article to server');
+      const result = await res.json();
+      return result.article || payload;
+    } catch (err) {
+      console.error('Server save failed, saving locally:', err);
+      const articles = await this.getArticles();
+      let saved: Article;
+      if (article.id) {
+        const index = articles.findIndex(a => a.id === article.id);
+        if (index >= 0) {
+          saved = { ...articles[index], ...article, updated_at: new Date().toISOString() } as Article;
+          articles[index] = saved;
+        } else {
+          throw new Error('Article not found');
+        }
       } else {
-        throw new Error('Article not found');
+        saved = {
+          ...payload,
+          id: 'art-' + Date.now(),
+          views: 0,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        } as Article;
+        articles.unshift(saved);
       }
-    } else {
-      saved = {
-        id: 'art-' + Date.now(),
-        title: article.title || 'Untitled',
-        slug: article.slug || ('story-' + Date.now()),
-        excerpt: article.excerpt || '',
-        content: article.content || '',
-        cover_image_url: article.cover_image_url || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop',
-        category_id: article.category_id || '',
-        status: article.status || 'draft',
-        featured: article.featured || false,
-        author_name: article.author_name || 'Anush',
-        reading_time: article.reading_time || '4 min read',
-        views: 0,
-        published_at: article.status === 'published' ? new Date().toISOString() : undefined,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      };
-      articles.unshift(saved);
+      setStorage('articles', articles);
+      return saved;
     }
-    setStorage('articles', articles);
-    if (isSupabaseConfigured && supabase) {
-      await supabase.from('articles').upsert([saved]);
-    }
-    return saved;
   },
 
   async deleteArticle(id: string): Promise<void> {
+    try {
+      const res = await fetch(`/articles.php?id=${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete from server');
+    } catch (err) {
+      console.error('Server delete failed, deleting locally:', err);
+    }
     const articles = (await this.getArticles()).filter(a => a.id !== id);
     setStorage('articles', articles);
-    if (isSupabaseConfigured && supabase) {
-      await supabase.from('articles').delete().eq('id', id);
-    }
   },
 
   async incrementViews(slug: string): Promise<void> {
