@@ -1487,15 +1487,15 @@ export const AdminArticleEditor: React.FC = () => {
       )}
 
     <textarea
-      rows={14}
-      placeholder="Content in HTML"
-      value={content}
-      onChange={(e) => setContent(e.target.value)}
-      className="w-full font-mono text-sm p-4 border border-[#E8E3DC] rounded-xl focus:outline-none focus:border-[#18181B]"
-    />
-  </div>
-</div>
-);
+          rows={14}
+          placeholder="Content in HTML"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          className="w-full font-mono text-sm p-4 border border-[#E8E3DC] rounded-xl focus:outline-none focus:border-[#18181B]"
+        />
+      </div>
+    </div>
+  );
 };
 
 export const AdminMediaPage = () => <div className="space-y-4"><h1 className="font-serif text-3xl font-bold">Media</h1><p className="text-sm">Manage image links and storage.</p></div>;
