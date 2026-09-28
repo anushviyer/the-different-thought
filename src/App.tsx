@@ -693,46 +693,86 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {featured && (
-        <section className="px-6 max-w-6xl mx-auto">
+      {/* Featured Section (Max 3, Full Uncropped Images) */}
+      {displayedFeatured.length > 0 && (
+        <section className="px-6 max-w-6xl mx-auto space-y-8 mb-16">
           <div className="border-t border-[#E8E3DC] pt-12 mb-8">
             <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">Featured Monogram</span>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-2xl border border-[#E8E3DC] p-6 sm:p-8">
-            <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-xl">
-              <img src={featured.cover_image_url} alt={featured.title} className="w-full h-full object-cover" />
-            </div>
-            <div className="lg:col-span-5 space-y-4">
-              <div className="text-xs text-[#71717A] flex items-center gap-2">
-                {featured.category && (
-                  <span className="px-2 py-0.5 bg-[#FAF8F5] border border-[#E8E3DC] text-[10px] uppercase font-bold tracking-wider rounded text-[#18181B]">
-                    {featured.category.name}
-                  </span>
-                )}
-                <span>{featured.reading_time}</span>
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">
-                <Link to={`/blog/${featured.slug}`} className="hover:text-[#FFB300] transition-colors">{featured.title}</Link>
-              </h2>
-              <p className="text-[#52525B] text-sm leading-relaxed">{featured.excerpt}</p>
-              <Link to={`/blog/${featured.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-[#18181B] hover:text-[#FFB300]">
-                <span>Read Full Essay</span>
-              </Link>
-            </div>
+
+          <div className={`grid gap-8 ${
+            displayedFeatured.length === 1
+              ? 'grid-cols-1'
+              : displayedFeatured.length === 2
+              ? 'grid-cols-1 md:grid-cols-2'
+              : 'grid-cols-1 md:grid-cols-3'
+          }`}>
+            {displayedFeatured.map((item) => (
+              <article
+                key={item.id}
+                className="bg-white rounded-2xl border border-[#E8E3DC] overflow-hidden flex flex-col justify-between"
+              >
+                <div className="w-full bg-[#FAF8F5] flex items-center justify-center p-3 border-b border-[#E8E3DC]">
+                  <img
+                    src={item.cover_image_url}
+                    alt={item.title}
+                    className="w-full h-auto max-h-[340px] object-contain rounded-lg"
+                  />
+                </div>
+
+                <div className="p-6 flex flex-col flex-1 justify-between space-y-4">
+                  <div className="space-y-2">
+                    <div className="text-xs text-[#71717A] flex items-center gap-2">
+                      {item.category && (
+                        <span className="px-2 py-0.5 bg-[#FAF8F5] border border-[#E8E3DC] text-[10px] uppercase font-bold tracking-wider rounded text-[#18181B]">
+                          {item.category.name}
+                        </span>
+                      )}
+                      {item.reading_time && <span>{item.reading_time}</span>}
+                    </div>
+
+                    <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B] leading-snug">
+                      <Link to={`/blog/${item.slug}`} className="hover:text-[#FFB300] transition-colors">
+                        {item.title}
+                      </Link>
+                    </h2>
+
+                    <p className="text-[#52525B] text-sm leading-relaxed line-clamp-3">
+                      {item.excerpt}
+                    </p>
+                  </div>
+
+                  <Link
+                    to={`/blog/${item.slug}`}
+                    className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[#18181B] hover:text-[#FFB300] pt-2"
+                  >
+                    <span>Read Full Essay &rarr;</span>
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
       )}
 
+      {/* Recent Dispatches (All Articles, Uncropped Covers) */}
       <section className="px-6 max-w-6xl mx-auto">
         <div className="border-t border-[#E8E3DC] pt-12 mb-8 flex justify-between items-center">
           <h2 className="font-serif text-2xl font-bold text-[#18181B]">Recent Dispatches</h2>
-          <Link to="/blog" className="text-xs uppercase tracking-wider font-semibold text-[#18181B] hover:text-[#FFB300]">All Stories &rarr;</Link>
+          <Link to="/blog" className="text-xs uppercase tracking-wider font-semibold text-[#18181B] hover:text-[#FFB300]">
+            All Stories &rarr;
+          </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {latest.map(article => (
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {latest.map((article) => (
             <article key={article.id} className="bg-white rounded-xl border border-[#E8E3DC] overflow-hidden flex flex-col">
-              <Link to={`/blog/${article.slug}`} className="aspect-[16/9] overflow-hidden">
-                <img src={article.cover_image_url} alt={article.title} className="w-full h-full object-cover hover:scale-105 transition-transform" />
+              <Link to={`/blog/${article.slug}`} className="w-full bg-[#FAF8F5] p-2 flex items-center justify-center border-b border-[#E8E3DC]">
+                <img
+                  src={article.cover_image_url}
+                  alt={article.title}
+                  className="w-full h-auto max-h-[220px] object-contain hover:scale-105 transition-transform"
+                />
               </Link>
               <div className="p-6 space-y-3">
                 <span className="text-xs text-[#FFB300] uppercase font-semibold">{article.reading_time}</span>
