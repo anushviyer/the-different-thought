@@ -643,6 +643,8 @@ export const HomePage: React.FC = () => {
   const [subEmail, setSubEmail] = useState('');
   const [subStatus, setSubStatus] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   useEffect(() => {
     async function load() {
@@ -657,13 +659,23 @@ setLatest(pub);
   }, []);
 
   const handleSub = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (subEmail) {
-      const res = await dbEngine.addSubscriber(subEmail);
-      setSubStatus(res.message);
+  e.preventDefault();
+  if (!subEmail) return;
+  setSubStatus('loading');
+  try {
+    const res = await dbEngine.addSubscriber(subEmail, `${firstName} ${lastName}`.trim());
+    setSubStatus('success');
+    setTimeout(() => {
+      setIsModalOpen(false);
+      setSubStatus('idle');
+      setFirstName('');
+      setLastName('');
       setSubEmail('');
-    }
-  };
+    }, 2000);
+  } catch (err) {
+    setSubStatus('error');
+  }
+};
 const featured = displayedFeatured[0];
   
   return (
@@ -788,6 +800,7 @@ const featured = displayedFeatured[0];
         </section>
       )}
 
+      {/* Newsletter Trigger Section */}
       <section className="px-6 max-w-xl mx-auto text-center space-y-4">
         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">Receive The Unhurried Dispatch</h2>
         <p className="text-sm text-[#52525B] leading-relaxed">
@@ -804,51 +817,90 @@ const featured = displayedFeatured[0];
         </div>
       </section>
 
-      {/* Subscription Modal */}
+      {/* Subscription Modal (Matching Navigation Bar) */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="relative w-full max-w-md bg-[#FAF8F5] border border-[#E8E3DC] rounded-2xl p-8 shadow-2xl space-y-6">
+          <div className="relative w-full max-w-md bg-[#FAF8F5] border border-[#E8E3DC] rounded-3xl p-8 sm:p-10 shadow-2xl space-y-6">
+            {/* Close Button */}
             <button
               type="button"
               onClick={() => {
                 setIsModalOpen(false);
-                setSubStatus('');
+                setSubStatus('idle');
               }}
-              className="absolute top-5 right-5 text-[#71717A] hover:text-[#18181B] text-xl font-semibold leading-none"
+              className="absolute top-6 right-6 text-[#71717A] hover:text-[#18181B] text-2xl font-bold leading-none cursor-pointer"
             >
               &times;
             </button>
 
-            <div className="space-y-2 text-center">
-              <h2 className="font-serif text-3xl font-bold text-[#18181B]">Join the Dispatch</h2>
-              <p className="text-sm text-[#52525B] leading-relaxed">
+            {/* Header */}
+            <div className="space-y-2 text-center pt-2">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#18181B] tracking-tight">
+                Join the Dispatch
+              </h2>
+              <p className="text-sm text-[#52525B] leading-relaxed max-w-sm mx-auto">
                 Essays on deliberate craft, quiet observations, and slow journeys — delivered straight to your inbox.
               </p>
             </div>
 
-            {subStatus ? (
-              <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-center text-sm font-medium">
-                {subStatus}
+            {subStatus === 'success' ? (
+              <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-center text-sm font-medium">
+                Thank you for subscribing! Welcome aboard.
               </div>
             ) : (
-              <form onSubmit={handleSub} className="space-y-4">
-                <div>
-                  <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1 text-left">Email Address</label>
+              <form onSubmit={handleSub} className="space-y-5">
+                {/* Name Fields */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[11px] uppercase font-bold tracking-wider text-[#71717A]">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Jane"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="w-full px-4 py-3 bg-white border border-[#E8E3DC] rounded-2xl text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#18181B] transition shadow-xs"
+                    />
+                  </div>
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[11px] uppercase font-bold tracking-wider text-[#71717A]">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Doe"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="w-full px-4 py-3 bg-white border border-[#E8E3DC] rounded-2xl text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#18181B] transition shadow-xs"
+                    />
+                  </div>
+                </div>
+
+                {/* Email Field */}
+                <div className="space-y-1.5 text-left">
+                  <label className="block text-[11px] uppercase font-bold tracking-wider text-[#71717A]">
+                    Email Address
+                  </label>
                   <input
                     type="email"
                     required
                     placeholder="jane@example.com"
                     value={subEmail}
                     onChange={(e) => setSubEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                    className="w-full px-4 py-3 bg-white border border-[#E8E3DC] rounded-2xl text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#18181B] transition shadow-xs"
                   />
                 </div>
 
+                {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full py-3 bg-[#18181B] hover:bg-black text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition mt-2"
+                  disabled={subStatus === 'loading'}
+                  className="w-full py-3.5 bg-[#18181B] hover:bg-black text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition disabled:opacity-50 shadow-md cursor-pointer mt-2"
                 >
-                  Subscribe
+                  {subStatus === 'loading' ? 'Subscribing...' : 'Subscribe'}
                 </button>
               </form>
             )}
@@ -858,6 +910,7 @@ const featured = displayedFeatured[0];
     </div>
   );
 };
+
 export const BlogPage: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
