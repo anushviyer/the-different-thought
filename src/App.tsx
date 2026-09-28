@@ -1471,7 +1471,7 @@ export const AdminArticleEditor: React.FC = () => {
               type="text"
               placeholder="Or enter Cover Image URL directly"
               value={coverUrl}
-              onChange={e => setCoverUrl(e.target.value)}
+              onChange={(e) => setCoverUrl(e.target.value)}
               className="w-full text-xs font-mono p-2 border rounded-lg"
             />
           </div>
