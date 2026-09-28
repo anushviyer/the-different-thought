@@ -787,28 +787,76 @@ const featured = displayedFeatured[0];
         </section>
       )}
 
-      <section className="px-6 max-w-md mx-auto text-center space-y-4">
-        <h2 className="font-serif text-2xl font-bold text-[#18181B]">Receive The Unhurried Dispatch</h2>
-        <p className="text-sm text-[#52525B]">Delivered bi-weekly. Direct thoughts on living, wandering, and making.</p>
-        <form onSubmit={handleSub} className="flex gap-2">
-          <input
-            type="email"
-            required
-            placeholder="Your email address"
-            value={subEmail}
-            onChange={(e) => setSubEmail(e.target.value)}
-            className="flex-1 px-4 py-2 bg-white border border-[#E8E3DC] rounded-full text-sm focus:outline-none"
-          />
-          <button type="submit" className="px-5 py-2 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-full hover:bg-[#FFB300]">
-            Join
+      <section className="px-6 max-w-xl mx-auto text-center space-y-4">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">Receive The Unhurried Dispatch</h2>
+        <p className="text-sm text-[#52525B] leading-relaxed">
+          Delivered bi-weekly. Direct thoughts on living, wandering, and making.
+        </p>
+        <div className="pt-2 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="bg-[#18181B] text-white hover:bg-black px-8 py-3 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm"
+          >
+            Subscribe
           </button>
-        </form>
-        {subStatus && <p className="text-xs text-[#FFB300]">{subStatus}</p>}
+        </div>
       </section>
+
+      {/* Subscription Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="relative w-full max-w-md bg-[#FAF8F5] border border-[#E8E3DC] rounded-2xl p-8 shadow-2xl space-y-6">
+            <button
+              type="button"
+              onClick={() => {
+                setIsModalOpen(false);
+                setSubStatus('');
+              }}
+              className="absolute top-5 right-5 text-[#71717A] hover:text-[#18181B] text-xl font-semibold leading-none"
+            >
+              &times;
+            </button>
+
+            <div className="space-y-2 text-center">
+              <h2 className="font-serif text-3xl font-bold text-[#18181B]">Join the Dispatch</h2>
+              <p className="text-sm text-[#52525B] leading-relaxed">
+                Essays on deliberate craft, quiet observations, and slow journeys — delivered straight to your inbox.
+              </p>
+            </div>
+
+            {subStatus ? (
+              <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-center text-sm font-medium">
+                {subStatus}
+              </div>
+            ) : (
+              <form onSubmit={handleSub} className="space-y-4">
+                <div>
+                  <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1 text-left">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="jane@example.com"
+                    value={subEmail}
+                    onChange={(e) => setSubEmail(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-[#18181B] hover:bg-black text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition mt-2"
+                >
+                  Subscribe
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
 export const BlogPage: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
