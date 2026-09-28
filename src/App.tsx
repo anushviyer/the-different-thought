@@ -1301,33 +1301,62 @@ export const AdminArticleEditor: React.FC = () => {
     setUploading(true);
 
     const reader = new FileReader();
-    reader.onload = async () => {
-      try {
-        const base64String = reader.result as string;
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = async () => {
+        // Resize to a maximum width of 1600px for sharp web covers
+        const maxWidth = 1600;
+        let width = img.width;
+        let height = img.height;
 
-        const res = await fetch('/upload.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            filename: file.name,
-            data: base64String,
-          }),
-        });
-
-        const data = await res.json();
-        if (res.ok && data.status === 'success') {
-          setCoverUrl(data.url);
-        } else {
-          alert(data.message || 'Image upload failed');
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
         }
-      } catch (err) {
-        console.error(err);
-        alert('Failed to upload image. Please try again.');
-      } finally {
-        setUploading(false);
-      }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          alert('Could not process image');
+          setUploading(false);
+          return;
+        }
+
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Convert to high-quality JPEG
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+
+        try {
+          const res = await fetch('/upload.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              filename: file.name.replace(/\.[^/.]+$/, "") + '.jpg',
+              data: compressedBase64,
+            }),
+          });
+
+          const data = await res.json();
+          if (res.ok && data.status === 'success') {
+            setCoverUrl(data.url);
+          } else {
+            alert(data.message || 'Image upload failed');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Failed to upload image. Please try again.');
+        } finally {
+          setUploading(false);
+        }
+      };
+
+      img.src = event.target?.result as string;
     };
 
     reader.onerror = () => {
