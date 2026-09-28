@@ -174,43 +174,42 @@ export const dbEngine = {
   },
 
 async saveArticle(article: Partial<Article>): Promise<Article> {
-    const payload = {
-      id: article.id || undefined,
-      title: article.title || 'Untitled',
-      slug: article.slug || ('story-' + Date.now()),
-      excerpt: article.excerpt || '',
-      // Safe base64 encoding that handles UTF-8 / special characters
-      content: btoa(encodeURIComponent(article.content || '').replace(/%([0-9A-F]{2})/g, (_, p1) =>
-        String.fromCharCode(parseInt(p1, 16))
-      )),
-      content_is_base64: true,
-      cover_image_url: article.cover_image_url || '',
-      category_id: article.category?.id || article.category_id || '',
-      category: article.category,
-      status: article.status || 'draft',
-      featured: article.featured || false,
-      author_name: article.author_name || 'Anush',
-      reading_time: article.reading_time || '4 min read',
-    };
+    const cleanTitle = (article.title || 'Untitled').trim();
+    const cleanSlug = (article.slug || ('story-' + Date.now())).trim();
 
-    // Use full current origin to prevent any HTTP -> HTTPS redirect stripping the body
-    const targetUrl = `${window.location.origin}/articles.php`;
+    // 1. Pack data into FormData (LiteSpeed accepts multipart without stripping)
+    const formData = new FormData();
+    if (article.id) formData.append('id', article.id);
+    formData.append('title', cleanTitle);
+    formData.append('slug', cleanSlug);
+    formData.append('excerpt', article.excerpt || '');
+    // Base64 encode to prevent LiteSpeed WAF from filtering out HTML formatting tags
+    formData.append('content', btoa(encodeURIComponent(article.content || '').replace(/%([0-9A-F]{2})/g, (_, p1) =>
+      String.fromCharCode(parseInt(p1, 16))
+    )));
+    formData.append('content_is_base64', '1');
+    formData.append('cover_image_url', article.cover_image_url || '');
+    formData.append('category_id', article.category?.id || article.category_id || '');
+    formData.append('category_name', article.category?.name || 'Thoughts & Perspectives');
+    formData.append('category_slug', article.category?.slug || 'thoughts');
+    formData.append('status', article.status || 'draft');
+    formData.append('featured', article.featured ? '1' : '0');
+    formData.append('author_name', article.author_name || 'Anush');
+    formData.append('reading_time', article.reading_time || '4 min read');
 
-    const res = await fetch(targetUrl, {
+    // 2. Exact relative URL ensures identical domain, protocol, and port with zero redirects
+    const res = await fetch('/articles.php', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+      body: formData, // No manual Content-Type header; the browser sets boundary automatically
     });
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `Server returned ${res.status}`);
+      throw new Error(err.error || `Server status ${res.status}`);
     }
 
     const result = await res.json();
-    return result.article || payload;
+    return result.article || article;
   },
   
   async deleteArticle(id: string): Promise<void> {
