@@ -1298,15 +1298,17 @@ export const AdminArticleEditor: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('image', file);
-
     setUploading(true);
     try {
       const res = await fetch('/upload.php', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': file.type || 'application/octet-stream',
+          'X-File-Name': file.name,
+        },
+        body: file,
       });
+
       const data = await res.json();
       if (res.ok && data.status === 'success') {
         setCoverUrl(data.url);
