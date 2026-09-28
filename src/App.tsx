@@ -2282,23 +2282,36 @@ export const AdminArticleEditor: React.FC = () => {
     }
   }, [id, isNew]);
 
-  const handleSave = async (status: 'draft' | 'published') => {
+ const handleSave = async (status: 'draft' | 'published') => {
+    const cleanTitle = title.trim();
+    if (!cleanTitle) {
+      alert('Please enter an essay title before saving.');
+      return;
+    }
+
     const selectedCategory = categories.find(c => c.id === selectedCategoryId) || categories[0];
 
-    await dbEngine.saveArticle({
-      id: isNew ? undefined : id,
-      title,
-      slug: slug || ('story-' + Date.now()),
-      excerpt,
-      content,
-      cover_image_url: coverUrl,
-      category: selectedCategory,
-      featured: isFeaturedMonogram,
-      status
-    });
-    navigate('/admin/articles');
-  };
+    try {
+      await dbEngine.saveArticle({
+        id: isNew ? undefined : id,
+        title: cleanTitle,
+        slug: slug.trim() || cleanTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        excerpt: excerpt.trim(),
+        content,
+        cover_image_url: coverUrl,
+        category: selectedCategory,
+        featured: isFeaturedMonogram,
+        status
+      });
 
+      alert(`Article ${status === 'published' ? 'published' : 'saved'} successfully!`);
+      navigate('/admin/articles');
+    } catch (err: any) {
+      console.error('Save failed:', err);
+      alert('Failed to save article: ' + (err.message || 'Check console or network response.'));
+    }
+  };
+  
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
