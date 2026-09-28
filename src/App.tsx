@@ -173,13 +173,15 @@ export const dbEngine = {
     return articles.find(a => a.slug === slug) || null;
   },
 
- async saveArticle(article: Partial<Article>): Promise<Article> {
+async saveArticle(article: Partial<Article>): Promise<Article> {
     const payload = {
       id: article.id || undefined,
       title: article.title || 'Untitled',
       slug: article.slug || ('story-' + Date.now()),
       excerpt: article.excerpt || '',
-      content: article.content || '',
+      // Base64 encode to prevent server firewalls/ModSecurity from stripping the body:
+      content: btoa(unescape(encodeURIComponent(article.content || ''))),
+      content_is_base64: true,
       cover_image_url: article.cover_image_url || '',
       category_id: article.category?.id || article.category_id || '',
       category: article.category,
@@ -189,20 +191,17 @@ export const dbEngine = {
       reading_time: article.reading_time || '4 min read',
     };
 
-    console.log('Sending payload to articles.php:', payload);
-
-    const res = await fetch('/articles.php', {
+    const res = await fetch(`${window.location.origin}/articles.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
       },
-      body: JSON.stringify(payload), // <-- MUST HAVE THIS LINE
+      body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.error || `Server returned ${res.status}`);
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Server returned ${res.status}`);
     }
 
     const result = await res.json();
