@@ -642,6 +642,7 @@ export const HomePage: React.FC = () => {
   const [author, setAuthor] = useState<AuthorProfile | null>(null);
   const [subEmail, setSubEmail] = useState('');
   const [subStatus, setSubStatus] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
