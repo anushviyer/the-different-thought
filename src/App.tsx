@@ -647,8 +647,9 @@ export const HomePage: React.FC = () => {
     async function load() {
       const articles = await dbEngine.getArticles();
       const pub = articles.filter(a => a.status === 'published');
-      setFeatured(pub.find(a => a.featured) || pub[0] || null);
-      setLatest(pub.slice(1, 5));
+     const feat = pub.find(a => a.isFeaturedMonogram || a.featured) || pub[0] || null;
+      setFeatured(feat);
+      setLatest(pub.filter(a => a.id !== feat?.id).slice(0, 4));
       setCategories(await dbEngine.getCategories());
       setAuthor(await dbEngine.getAuthorProfile());
     }
@@ -699,12 +700,17 @@ export const HomePage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-2xl border border-[#E8E3DC] p-6 sm:p-8">
             <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-xl">
-              <img src={featured.cover_image_url} alt={featured.title} className="w-full h-full object-cover" />
+              <img src={featured.cover_image || featured.cover_image_url || featured.coverUrl} alt={featured.title} className="w-full h-full object-cover" />
             </div>
             <div className="lg:col-span-5 space-y-4">
               <div className="text-xs text-[#71717A] flex items-center gap-2">
-                <span>{featured.reading_time}</span>
-              </div>
+  {featured.category && (
+    <span className="px-2 py-0.5 bg-[#FAF8F5] border border-[#E8E3DC] text-[10px] uppercase font-bold tracking-wider rounded text-[#18181B]">
+      {featured.category}
+    </span>
+  )}
+  <span>{featured.reading_time}</span>
+</div>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">
                 <Link to={`/blog/${featured.slug}`} className="hover:text-[#FFB300] transition-colors">{featured.title}</Link>
               </h2>
@@ -1182,15 +1188,11 @@ export const AdminLayout: React.FC = () => {
             + New Essay
           </Link>
           <nav className="space-y-1 text-xs uppercase tracking-wider font-semibold text-[#52525B]">
-            <NavLink to="/admin/dashboard" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Dashboard</NavLink>
-            <NavLink to="/admin/articles" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Articles</NavLink>
-            <NavLink to="/admin/media" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Media</NavLink>
-            <NavLink to="/admin/categories" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Categories</NavLink>
-            <NavLink to="/admin/tags" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Tags</NavLink>
-            <NavLink to="/admin/subscribers" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Subscribers</NavLink>
-            <NavLink to="/admin/about" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>About Author</NavLink>
-            <NavLink to="/admin/settings" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Settings</NavLink>
-          </nav>
+          <NavLink to="/admin/dashboard" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Dashboard</NavLink>
+          <NavLink to="/admin/articles" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Articles</NavLink>
+          <NavLink to="/admin/categories" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Categories</NavLink>
+          <NavLink to="/admin/subscribers" className={({isActive}) => `block p-2 rounded ${isActive ? 'bg-[#18181B] text-white' : 'hover:bg-[#FAF8F5]'}`}>Subscribers</NavLink>
+        </nav>
         </div>
         <button onClick={() => { logout(); navigate('/admin/login'); }} className="text-xs uppercase text-red-600 font-semibold p-2 text-left">
           Sign Out
@@ -1293,6 +1295,8 @@ export const AdminArticleEditor: React.FC = () => {
   const [content, setContent] = useState('');
   const [coverUrl, setCoverUrl] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [category, setCategory] = useState('General');
+  const [isFeaturedMonogram, setIsFeaturedMonogram] = useState(false);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -1365,28 +1369,36 @@ export const AdminArticleEditor: React.FC = () => {
     reader.readAsDataURL(file);
   };
   useEffect(() => {
-    if (!isNew && id) {
-      dbEngine.getArticles().then(arts => {
-        const found = arts.find(a => a.id === id);
-        if (found) { setTitle(found.title); setSlug(found.slug); setExcerpt(found.excerpt); setContent(found.content); setCoverUrl(found.cover_image_url); }
-      });
-    }
-  }, [id, isNew]);
+  if (!isNew && id) {
+    dbEngine.getArticles().then(arts => {
+      const found = arts.find(a => a.id === id);
+      if (found) {
+        setTitle(found.title);
+        setSlug(found.slug);
+        setExcerpt(found.excerpt);
+        setContent(found.content);
+        setCoverUrl(found.cover_image || found.coverImage || '');
+        setCategory(found.category || 'General');
+        setIsFeaturedMonogram(Boolean(found.isFeaturedMonogram || found.is_featured_monogram));
+      }
+    });
+  }
+}, [id, isNew]);
 
   const handleSave = async (status: 'draft' | 'published') => {
-    await dbEngine.saveArticle({
-      id: isNew ? undefined : id,
-      title,
-      slug: slug || ('story-' + Date.now()),
-      excerpt,
-      content,
-      cover_image_url: coverUrl || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1200&auto=format&fit=crop',
-      status,
-      category_id: 'cat-1'
-    });
-    navigate('/admin/articles');
-  };
-
+  await dbEngine.saveArticle({
+    id: isNew ? undefined : id,
+    title,
+    slug: slug || ('story-' + Date.now()),
+    excerpt,
+    content,
+    cover_image: coverUrl,
+    category,
+    isFeaturedMonogram,
+    status
+  });
+  navigate('/admin/articles');
+};
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -1400,6 +1412,39 @@ export const AdminArticleEditor: React.FC = () => {
         <input type="text" placeholder="Title" value={title} onChange={e=>setTitle(e.target.value)} className="w-full font-serif text-2xl p-2 border-b focus:outline-none" />
         <input type="text" placeholder="Slug" value={slug} onChange={e=>setSlug(e.target.value)} className="w-full text-xs font-mono p-2 border rounded" />
         <textarea rows={2} placeholder="Excerpt" value={excerpt} onChange={e=>setExcerpt(e.target.value)} className="w-full text-sm p-2 border rounded" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center bg-[#FBFBFA] p-4 rounded-lg border border-[#E8E3DC]">
+          {/* Category Selection */}
+          <div>
+            <label className="block text-xs uppercase tracking-wider font-semibold text-[#71717A] mb-1">
+              Category
+            </label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full text-sm bg-white p-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:border-[#18181B]"
+            >
+              <option value="General">General</option>
+              <option value="Philosophy">Philosophy</option>
+              <option value="Culture">Culture</option>
+              <option value="Economics">Economics</option>
+              <option value="Technology">Technology</option>
+            </select>
+          </div>
+
+          {/* Featured Monogram Toggle */}
+          <div className="flex items-center gap-3 pt-4 md:pt-2">
+            <input
+              type="checkbox"
+              id="featuredMonogram"
+              checked={isFeaturedMonogram}
+              onChange={(e) => setIsFeaturedMonogram(e.target.checked)}
+              className="w-4 h-4 text-[#18181B] border-gray-300 rounded focus:ring-[#18181B] cursor-pointer"
+            />
+            <label htmlFor="featuredMonogram" className="text-xs uppercase tracking-wider font-semibold text-[#18181B] cursor-pointer select-none">
+              Featured Monogram (Display on Homepage)
+            </label>
+          </div>
+        </div>
         <div className="space-y-2 pt-1 pb-1">
           <div className="flex items-center gap-3">
             <label className="cursor-pointer px-4 py-2 bg-[#18181B] text-white text-xs uppercase font-semibold rounded-lg hover:bg-neutral-800 transition shrink-0">
