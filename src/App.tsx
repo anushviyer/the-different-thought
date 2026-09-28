@@ -1485,7 +1485,6 @@ export const AdminArticleEditor: React.FC = () => {
           />
         </div>
       )}
-    </div>
 
     <textarea
       rows={14}
