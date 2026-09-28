@@ -579,6 +579,557 @@ export const Header: React.FC = () => {
   );
 };
 
+export const PrivacyPolicy: React.FC = () => (
+  <main className="max-w-4xl mx-auto px-6 py-16 md:py-24 space-y-10">
+    {/* Page Header */}
+    <div className="border-b border-[#E8E3DC] pb-8 space-y-3">
+      <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">
+        Legal & Transparency
+      </span>
+      <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#18181B]">
+        Privacy Policy
+      </h1>
+      <div className="text-xs text-[#71717A] space-y-1 pt-1">
+        <p><strong className="text-[#18181B]">Website:</strong> The Different Thought</p>
+        <p><strong className="text-[#18181B]">URL:</strong> <a href="https://differentthought.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFB300] underline underline-offset-2">https://differentthought.com/</a></p>
+        <p><strong className="text-[#18181B]">Effective Date:</strong> 28 September 2026</p>
+        <p><strong className="text-[#18181B]">Last Updated:</strong> 28 September 2026</p>
+      </div>
+    </div>
+
+    {/* Document Body */}
+    <div className="space-y-8 text-[#52525B] leading-relaxed text-sm sm:text-base">
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          1. Introduction
+        </h2>
+        <p>
+          Welcome to The Different Thought (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;), a personal blogging website created and managed by Anush Iyer.
+        </p>
+        <p>
+          The Different Thought is a platform for sharing personal thoughts, experiences, travel stories, observations, and perspectives on various subjects.
+        </p>
+        <p>
+          We respect your privacy and are committed to protecting your personal information. This Privacy Policy explains what information we collect, how we use it, how it is protected, and your rights regarding your information when you visit or interact with our website.
+        </p>
+        <p>
+          By using this website, you acknowledge that you have read this Privacy Policy.
+        </p>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          2. Information We Collect
+        </h2>
+        <p>
+          We may collect the following types of information when you visit or interact with our website.
+        </p>
+
+        <div className="space-y-2 pl-4 border-l-2 border-[#E8E3DC]">
+          <h3 className="font-semibold text-[#18181B]">2.1 Information You Provide</h3>
+          <p>We may collect personal information that you voluntarily provide, including:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Your name and email address when you contact us.</li>
+            <li>Your name and email address when you subscribe to blog updates.</li>
+            <li>Any information you include in messages, feedback, or other communications you send to us.</li>
+          </ul>
+          <p className="pt-1 italic text-xs text-[#71717A]">
+            You are not required to provide personal information simply to browse and read our blog.
+          </p>
+        </div>
+
+        <div className="space-y-2 pl-4 border-l-2 border-[#E8E3DC]">
+          <h3 className="font-semibold text-[#18181B]">2.2 Information Collected Automatically</h3>
+          <p>
+            When you visit our website, certain technical information may be collected automatically, depending on the website features and services in use. This may include:
+          </p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>IP address.</li>
+            <li>Browser type and version.</li>
+            <li>Device and operating system information.</li>
+            <li>Pages visited and time spent on the website.</li>
+            <li>Referring website or source.</li>
+            <li>General website usage and interaction data.</li>
+          </ul>
+          <p className="pt-1 text-xs text-[#71717A]">
+            This information may be collected through server logs, cookies, and analytics tools, where enabled.
+          </p>
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          3. How We Use Your Information
+        </h2>
+        <p>We may use the information collected for the following purposes:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>To respond to your questions, enquiries, and feedback.</li>
+          <li>To send blog updates and newsletters if you have subscribed.</li>
+          <li>To improve our website, content, and overall user experience.</li>
+          <li>To understand which articles and topics are of interest to readers.</li>
+          <li>To maintain website security and prevent misuse.</li>
+          <li>To comply with applicable legal obligations.</li>
+        </ul>
+        <p>
+          We will use personal information only for legitimate purposes and in accordance with applicable law.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          4. Email Subscriptions
+        </h2>
+        <p>
+          If you subscribe to The Different Thought, we may collect your email address to send you new articles, blog updates, and other relevant communications.
+        </p>
+        <p>
+          You can unsubscribe at any time using the unsubscribe link provided in our emails, where available, or by contacting us directly.
+        </p>
+        <p>
+          We do not sell or rent subscriber email addresses to third parties.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          5. Cookies and Analytics
+        </h2>
+        <p>
+          Our website may use cookies and similar technologies to support essential website functions, remember preferences, understand website traffic, and improve the browsing experience.
+        </p>
+        <p>
+          Where enabled, third-party analytics services may collect information such as pages visited, browsing duration, device type, and approximate location.
+        </p>
+        <p>
+          You can manage or disable cookies through your browser settings. Please note that disabling certain cookies may affect some website functionality.
+        </p>
+        <p>
+          Where required by applicable law, we will obtain consent before using non-essential cookies or similar technologies.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          6. Sharing of Information
+        </h2>
+        <p>We do not sell, rent, or trade your personal information.</p>
+        <p>
+          We may share limited information with trusted third-party service providers who help us operate and maintain the website. These may include:
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Website hosting providers.</li>
+          <li>Email and newsletter service providers.</li>
+          <li>Website analytics providers.</li>
+          <li>Website security and maintenance providers.</li>
+        </ul>
+        <p>
+          Such providers may process information only as necessary to provide their services and subject to applicable legal requirements.
+        </p>
+        <p>
+          We may also disclose personal information if required by law, legal process, or a lawful request from an authorised government authority.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          7. Third-Party Websites
+        </h2>
+        <p>
+          Our articles and pages may contain links to external websites, publications, social media platforms, or other online resources.
+        </p>
+        <p>
+          These websites operate independently and have their own privacy policies and practices. We are not responsible for their content, privacy practices, or security.
+        </p>
+        <p>
+          We encourage you to review the privacy policies of any third-party websites you visit.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          8. Data Retention
+        </h2>
+        <p>
+          We retain personal information only for as long as reasonably necessary to fulfil the purposes described in this Privacy Policy, comply with applicable legal obligations, resolve disputes, and maintain website security.
+        </p>
+        <p>
+          When information is no longer required, we will take reasonable steps to delete or anonymise it, subject to applicable legal requirements.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          9. Data Security
+        </h2>
+        <p>
+          We take reasonable technical and organisational measures to protect personal information against unauthorised access, disclosure, alteration, loss, or misuse.
+        </p>
+        <p>
+          However, no method of transmitting or storing information online is completely secure. While we make reasonable efforts to protect your information, we cannot guarantee absolute security.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          10. Your Privacy Rights
+        </h2>
+        <p>Subject to applicable law, you may have the right to:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Request access to personal information we hold about you.</li>
+          <li>Request correction or updating of inaccurate information.</li>
+          <li>Request deletion of your personal information where applicable.</li>
+          <li>Withdraw consent for processing where consent is the legal basis.</li>
+          <li>Unsubscribe from email communications.</li>
+          <li>Raise a concern or complaint about how your information is handled.</li>
+        </ul>
+        <p>
+          To exercise any applicable rights, please contact us using the details provided below. We may need to verify your identity before responding.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          11. Children&apos;s Privacy
+        </h2>
+        <p>
+          The Different Thought is intended for a general audience and is not specifically directed at children.
+        </p>
+        <p>
+          We do not knowingly collect personal information from children in a manner prohibited by applicable law.
+        </p>
+        <p>
+          If you believe that a child has provided personal information to us, please contact us so that we can review the matter and take appropriate action.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          12. Changes to This Privacy Policy
+        </h2>
+        <p>
+          We may update this Privacy Policy from time to time to reflect changes in our website, services, or applicable legal requirements.
+        </p>
+        <p>
+          Any changes will be published on this page along with an updated &ldquo;Last Updated&rdquo; date. We encourage you to review this page periodically.
+        </p>
+      </section>
+
+      <section className="space-y-3 pt-4 border-t border-[#E8E3DC]">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          13. Contact Us
+        </h2>
+        <p>
+          If you have any questions, concerns, or requests regarding this Privacy Policy or the handling of your personal information, please contact:
+        </p>
+        <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E8E3DC] text-sm space-y-1 inline-block min-w-[280px]">
+          <p className="font-bold text-[#18181B]">Anush Iyer</p>
+          <p className="text-[#71717A]">The Different Thought</p>
+          <p>
+            Email:{' '}
+            <a
+              href="mailto:hello@differentthought.com"
+              className="text-[#18181B] font-medium hover:text-[#FFB300] underline underline-offset-2"
+            >
+              hello@differentthought.com
+            </a>
+          </p>
+          <p>
+            Website:{' '}
+            <a
+              href="https://differentthought.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#18181B] font-medium hover:text-[#FFB300] underline underline-offset-2"
+            >
+              https://differentthought.com/
+            </a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+);
+
+export const TermsOfService: React.FC = () => (
+  <main className="max-w-4xl mx-auto px-6 py-16 md:py-24 space-y-10">
+    {/* Page Header */}
+    <div className="border-b border-[#E8E3DC] pb-8 space-y-3">
+      <span className="text-xs uppercase tracking-widest text-[#71717A] font-semibold">
+        Guidelines & Agreements
+      </span>
+      <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#18181B]">
+        Terms &amp; Conditions
+      </h1>
+      <div className="text-xs text-[#71717A] space-y-1 pt-1">
+        <p><strong className="text-[#18181B]">Website:</strong> The Different Thought</p>
+        <p>
+          <strong className="text-[#18181B]">URL:</strong>{' '}
+          <a
+            href="https://differentthought.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#FFB300] underline underline-offset-2"
+          >
+            https://differentthought.com/
+          </a>
+        </p>
+        <p><strong className="text-[#18181B]">Effective Date:</strong> 28 September 2026</p>
+        <p><strong className="text-[#18181B]">Last Updated:</strong> 28 September 2026</p>
+      </div>
+    </div>
+
+    {/* Document Body */}
+    <div className="space-y-8 text-[#52525B] leading-relaxed text-sm sm:text-base">
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          1. Introduction
+        </h2>
+        <p>
+          Welcome to The Different Thought, a personal blogging website created and managed by Anush Iyer.
+        </p>
+        <p>
+          These Terms &amp; Conditions govern your access to and use of{' '}
+          <a
+            href="https://differentthought.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#18181B] underline hover:text-[#FFB300]"
+          >
+            https://differentthought.com/
+          </a>
+          , including its articles, written content, images, and other features.
+        </p>
+        <p>
+          By accessing or using this website, you agree to these Terms &amp; Conditions. If you do not agree with them, please discontinue use of the website.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          2. About The Different Thought
+        </h2>
+        <p>
+          The Different Thought is an independent personal blog featuring articles, opinions, observations, and experiences relating to travel, business, design, technology, lifestyle, and other subjects.
+        </p>
+        <p>
+          The content reflects the personal views and experiences of the author unless otherwise stated. It is intended for general informational, educational, and entertainment purposes.
+        </p>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          3. Intellectual Property and Copyright
+        </h2>
+        <p>
+          Unless otherwise stated, all original articles, written content, graphics, branding, and other original materials published on this website are the intellectual property of The Different Thought or their respective owners.
+        </p>
+
+        <div className="space-y-2 pl-4 border-l-2 border-[#E8E3DC]">
+          <h3 className="font-semibold text-[#18181B]">You may:</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Read and share links to articles published on this website.</li>
+            <li>Quote brief excerpts from articles for personal, educational, or non-commercial purposes, provided appropriate credit and a link to the original article are included.</li>
+          </ul>
+        </div>
+
+        <div className="space-y-2 pl-4 border-l-2 border-[#E8E3DC]">
+          <h3 className="font-semibold text-[#18181B]">You may not:</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Reproduce, republish, or distribute complete articles without prior written permission.</li>
+            <li>Copy, modify, or commercially exploit original content without permission.</li>
+            <li>Use the website&apos;s branding, logo, or original creative materials without authorisation.</li>
+          </ul>
+        </div>
+
+        <p className="text-xs text-[#71717A] pt-1">
+          Third-party images, trademarks, quotations, and other materials remain the property of their respective owners and may be subject to separate copyright restrictions.
+        </p>
+        <p className="text-xs text-[#71717A]">
+          For permission to reproduce or use original content, please contact us.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          4. Accuracy and Disclaimer
+        </h2>
+        <p>
+          The content published on The Different Thought represents personal opinions, experiences, and observations.
+        </p>
+        <p>
+          Although reasonable care is taken when preparing articles, we do not guarantee that all information is complete, accurate, or up to date.
+        </p>
+        <p>
+          Articles discussing business, technology, travel, design, or other subjects are provided for general informational purposes only. They should not be treated as professional, financial, legal, medical, or other specialised advice.
+        </p>
+        <p>
+          Readers should independently verify information and seek professional advice where appropriate.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          5. Personal Opinions
+        </h2>
+        <p>
+          The views expressed in articles are those of the author and are intended to encourage thought, discussion, and the exchange of perspectives.
+        </p>
+        <p>
+          Readers may agree or disagree with the opinions expressed. Nothing published on this website is intended to represent the views of any employer, client, business partner, or other organisation unless explicitly stated.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          6. Acceptable Use
+        </h2>
+        <p>You agree to use this website lawfully and responsibly.</p>
+        <p className="font-semibold text-[#18181B]">You must not:</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Use the website for any unlawful or fraudulent purpose.</li>
+          <li>Attempt to gain unauthorised access to the website, its server, or its editorial portal.</li>
+          <li>Interfere with the website&apos;s security, functionality, or availability.</li>
+          <li>Distribute malicious software or attempt to compromise the website.</li>
+          <li>Copy or scrape website content in a manner that infringes intellectual property rights or violates applicable law.</li>
+        </ul>
+        <p className="pt-1">
+          We reserve the right to restrict access or take appropriate action in response to misuse of the website.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          7. External Links
+        </h2>
+        <p>
+          This website may contain links to third-party websites, articles, services, or social media platforms for additional information or convenience.
+        </p>
+        <p>
+          These links do not necessarily imply endorsement. We do not control or take responsibility for the content, availability, accuracy, or policies of external websites.
+        </p>
+        <p>
+          Accessing third-party websites is at your own discretion and subject to their respective terms and conditions.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          8. Email Communication and Subscriptions
+        </h2>
+        <p>
+          You may contact us or subscribe to updates through the features made available on the website.
+        </p>
+        <p>
+          By subscribing, you agree to receive blog-related updates and communications. You may unsubscribe at any time using the available unsubscribe facility or by contacting us.
+        </p>
+        <p>
+          We reserve the right to discontinue or modify subscription services, website features, or communications at any time.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          9. Website Availability
+        </h2>
+        <p>
+          We aim to keep The Different Thought accessible and functioning smoothly. However, we do not guarantee uninterrupted availability or that the website will always be free from errors, technical issues, or security vulnerabilities.
+        </p>
+        <p>
+          We reserve the right to modify, suspend, or discontinue any part of the website without prior notice.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          10. Limitation of Liability
+        </h2>
+        <p>
+          To the extent permitted by applicable law, The Different Thought and its author shall not be liable for any direct, indirect, incidental, or consequential loss arising from your use of, or inability to use, this website or reliance on its content.
+        </p>
+        <p>
+          This includes, without limitation, loss resulting from errors, omissions, outdated information, website interruptions, or third-party content.
+        </p>
+        <p className="text-xs text-[#71717A]">
+          Nothing in these Terms excludes or limits liability where such exclusion or limitation is prohibited by applicable law.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          11. Privacy
+        </h2>
+        <p>
+          Your use of this website is also governed by our{' '}
+          <Link to="/privacy" className="text-[#18181B] font-semibold underline hover:text-[#FFB300]">
+            Privacy Policy
+          </Link>
+          , which explains how we collect, use, and protect personal information.
+        </p>
+        <p>
+          You can review the Privacy Policy through the link provided on the website.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          12. Changes to These Terms
+        </h2>
+        <p>
+          We may revise these Terms &amp; Conditions from time to time to reflect changes in the website, its features, or applicable laws.
+        </p>
+        <p>
+          Updated terms will be published on this page with a revised &ldquo;Last Updated&rdquo; date. Your continued use of the website after changes are published constitutes acceptance of the updated terms, to the extent permitted by law.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          13. Governing Law and Jurisdiction
+        </h2>
+        <p>
+          These Terms &amp; Conditions shall be governed by and interpreted in accordance with the laws of India.
+        </p>
+        <p>
+          Subject to applicable law, courts of competent jurisdiction in Ahmedabad, Gujarat, India, shall have jurisdiction over disputes arising from the use of this website.
+        </p>
+      </section>
+
+      <section className="space-y-3 pt-4 border-t border-[#E8E3DC]">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
+          14. Contact
+        </h2>
+        <p>
+          For questions, permissions, or concerns relating to these Terms &amp; Conditions, please contact:
+        </p>
+        <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E8E3DC] text-sm space-y-1 inline-block min-w-[280px]">
+          <p className="font-bold text-[#18181B]">Anush Iyer</p>
+          <p className="text-[#71717A]">The Different Thought</p>
+          <p>
+            Email:{' '}
+            <a
+              href="mailto:hello@differentthought.com"
+              className="text-[#18181B] font-medium hover:text-[#FFB300] underline underline-offset-2"
+            >
+              hello@differentthought.com
+            </a>
+          </p>
+          <p>
+            Website:{' '}
+            <a
+              href="https://differentthought.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#18181B] font-medium hover:text-[#FFB300] underline underline-offset-2"
+            >
+              https://differentthought.com/
+            </a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+);
+
 export const Footer: React.FC = () => (
   <footer className="bg-[#FAF8F5] border-t border-[#E8E3DC] pt-16 pb-12 mt-20">
     <div className="max-w-6xl mx-auto px-6">
@@ -2043,8 +2594,8 @@ export default function App() {
             <Route path="category/:slug" element={<CategoryDetailPage />} />
             <Route path="search" element={<SearchPage />} />
             <Route path="contact" element={<ContactPage />} />
-            <Route path="privacy" element={<PrivacyPage />} />
-            <Route path="terms" element={<TermsPage />} />
+           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           </Route>
 
           <Route path="/admin/login" element={<AdminLoginPage />} />
