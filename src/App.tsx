@@ -647,7 +647,7 @@ export const HomePage: React.FC = () => {
     async function load() {
       const articles = await dbEngine.getArticles();
       const pub = articles.filter(a => a.status === 'published');
-     const feat = pub.find(a => a.isFeaturedMonogram || a.featured) || pub[0] || null;
+     const feat = pub.find(a => a.featured) || pub[0] || null;
       setFeatured(feat);
       setLatest(pub.filter(a => a.id !== feat?.id).slice(0, 4));
       setCategories(await dbEngine.getCategories());
@@ -700,13 +700,13 @@ export const HomePage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-2xl border border-[#E8E3DC] p-6 sm:p-8">
             <div className="lg:col-span-7 aspect-[16/10] overflow-hidden rounded-xl">
-              <img src={featured.cover_image || featured.cover_image_url || featured.coverUrl} alt={featured.title} className="w-full h-full object-cover" />
-            </div>
+              <img src={featured.cover_image_url} alt={featured.title} className="w-full h-full object-cover" />
             <div className="lg:col-span-5 space-y-4">
               <div className="text-xs text-[#71717A] flex items-center gap-2">
+  <div className="text-xs text-[#71717A] flex items-center gap-2">
   {featured.category && (
     <span className="px-2 py-0.5 bg-[#FAF8F5] border border-[#E8E3DC] text-[10px] uppercase font-bold tracking-wider rounded text-[#18181B]">
-      {featured.category}
+      {featured.category.name}
     </span>
   )}
   <span>{featured.reading_time}</span>
@@ -1293,10 +1293,11 @@ export const AdminArticleEditor: React.FC = () => {
   const [slug, setSlug] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
-  const [coverUrl, setCoverUrl] = useState('');
-  const [uploading, setUploading] = useState(false);
-  const [category, setCategory] = useState('General');
+ const [coverUrl, setCoverUrl] = useState('');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>('');
   const [isFeaturedMonogram, setIsFeaturedMonogram] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -1371,34 +1372,43 @@ export const AdminArticleEditor: React.FC = () => {
   useEffect(() => {
   if (!isNew && id) {
     dbEngine.getArticles().then(arts => {
-      const found = arts.find(a => a.id === id);
-      if (found) {
-        setTitle(found.title);
-        setSlug(found.slug);
-        setExcerpt(found.excerpt);
-        setContent(found.content);
-        setCoverUrl(found.cover_image || found.coverImage || '');
-        setCategory(found.category || 'General');
-        setIsFeaturedMonogram(Boolean(found.isFeaturedMonogram || found.is_featured_monogram));
-      }
+      useEffect(() => {
+    dbEngine.getCategories().then(cats => {
+      setCategories(cats);
     });
-  }
-}, [id, isNew]);
+
+    if (!isNew && id) {
+      dbEngine.getArticles().then(arts => {
+        const found = arts.find(a => a.id === id);
+        if (found) {
+          setTitle(found.title);
+          setSlug(found.slug);
+          setExcerpt(found.excerpt);
+          setContent(found.content);
+          setCoverUrl(found.cover_image_url || '');
+          setSelectedCategoryId(found.category?.id || '');
+          setIsFeaturedMonogram(Boolean(found.featured));
+        }
+      });
+    }
+  }, [id, isNew]);
 
   const handleSave = async (status: 'draft' | 'published') => {
-  await dbEngine.saveArticle({
-    id: isNew ? undefined : id,
-    title,
-    slug: slug || ('story-' + Date.now()),
-    excerpt,
-    content,
-    cover_image: coverUrl,
-    category,
-    isFeaturedMonogram,
-    status
-  });
-  navigate('/admin/articles');
-};
+    const selectedCategory = categories.find(c => c.id === selectedCategoryId) || categories[0];
+
+    await dbEngine.saveArticle({
+      id: isNew ? undefined : id,
+      title,
+      slug: slug || ('story-' + Date.now()),
+      excerpt,
+      content,
+      cover_image_url: coverUrl,
+      category: selectedCategory,
+      featured: isFeaturedMonogram,
+      status
+    });
+    navigate('/admin/articles');
+  };
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -1419,15 +1429,16 @@ export const AdminArticleEditor: React.FC = () => {
               Category
             </label>
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={selectedCategoryId}
+              onChange={(e) => setSelectedCategoryId(e.target.value)}
               className="w-full text-sm bg-white p-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:border-[#18181B]"
             >
-              <option value="General">General</option>
-              <option value="Philosophy">Philosophy</option>
-              <option value="Culture">Culture</option>
-              <option value="Economics">Economics</option>
-              <option value="Technology">Technology</option>
+              <option value="">Select a Category</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
 
