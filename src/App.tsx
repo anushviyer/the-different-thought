@@ -173,7 +173,7 @@ export const dbEngine = {
     return articles.find(a => a.slug === slug) || null;
   },
 
-  async saveArticle(article: Partial<Article>): Promise<Article> {
+ async saveArticle(article: Partial<Article>): Promise<Article> {
     const payload = {
       id: article.id || undefined,
       title: article.title || 'Untitled',
@@ -189,43 +189,25 @@ export const dbEngine = {
       reading_time: article.reading_time || '4 min read',
     };
 
-    try {
-      const res = await fetch('/articles.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+    console.log('Sending payload to articles.php:', payload);
 
-      if (!res.ok) throw new Error('Failed to save article to server');
-      const result = await res.json();
-      return result.article || payload;
-    } catch (err) {
-      console.error('Server save failed, saving locally:', err);
-      const articles = await this.getArticles();
-      let saved: Article;
-      if (article.id) {
-        const index = articles.findIndex(a => a.id === article.id);
-        if (index >= 0) {
-          saved = { ...articles[index], ...article, updated_at: new Date().toISOString() } as Article;
-          articles[index] = saved;
-        } else {
-          throw new Error('Article not found');
-        }
-      } else {
-        saved = {
-          ...payload,
-          id: 'art-' + Date.now(),
-          views: 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        } as Article;
-        articles.unshift(saved);
-      }
-      setStorage('articles', articles);
-      return saved;
+    const res = await fetch('/articles.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(payload), // <-- MUST HAVE THIS LINE
+    });
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error || `Server returned ${res.status}`);
     }
-  },
 
+    const result = await res.json();
+    return result.article || payload;
+  },
   async deleteArticle(id: string): Promise<void> {
     try {
       const res = await fetch(`/articles.php?id=${encodeURIComponent(id)}`, {
