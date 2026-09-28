@@ -1292,7 +1292,7 @@ export const AdminArticleEditor: React.FC = () => {
   const [slug, setSlug] = useState('');
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
- const [coverUrl, setCoverUrl] = useState('');
+  const [coverUrl, setCoverUrl] = useState('');
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>('');
   const [isFeaturedMonogram, setIsFeaturedMonogram] = useState(false);
@@ -1308,7 +1308,6 @@ export const AdminArticleEditor: React.FC = () => {
     reader.onload = (event) => {
       const img = new Image();
       img.onload = async () => {
-        // Shrink the image to a max width of 1200px so it is fast and tiny
         const maxWidth = 1200;
         let width = img.width;
         let height = img.height;
@@ -1329,18 +1328,14 @@ export const AdminArticleEditor: React.FC = () => {
         }
 
         ctx.drawImage(img, 0, 0, width, height);
-        
-        // Convert canvas back to a lightweight JPEG string
         const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
 
-        // Append it as a normal text field (NOT as a file)
         const formData = new FormData();
         formData.append('image_base64', compressedBase64);
 
         try {
           const res = await fetch('/upload.php', {
             method: 'POST',
-            // Do NOT set headers. Let the browser auto-set the boundary for FormData.
             body: formData,
           });
 
@@ -1368,10 +1363,8 @@ export const AdminArticleEditor: React.FC = () => {
 
     reader.readAsDataURL(file);
   };
+
   useEffect(() => {
-  if (!isNew && id) {
-    dbEngine.getArticles().then(arts => {
-      useEffect(() => {
     dbEngine.getCategories().then(cats => {
       setCategories(cats);
     });
@@ -1435,11 +1428,11 @@ export const AdminArticleEditor: React.FC = () => {
               className="w-full text-sm bg-white p-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:border-[#18181B]"
             >
               <option value="">Select a Category</option>
-             {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-               {cat.name}
-              </option>
-            ))}
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
 
