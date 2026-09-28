@@ -435,6 +435,7 @@ export const useAuth = () => useContext(AuthContext);
    ========================================================================== */
 export const Header: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -453,8 +454,8 @@ export const Header: React.FC = () => {
         body: JSON.stringify({
           firstName: firstName.trim(),
           lastName: lastName.trim(),
-          email: email.trim()
-        })
+          email: email.trim(),
+        }),
       });
 
       if (!res.ok) throw new Error('Subscription failed');
@@ -476,12 +477,14 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DC]">
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            <img src="/logo.png" alt="The Different Thought" className="h-16 w-auto object-contain" />
+      <header className="sticky top-0 z-40 bg-[#FAF8F5] border-b border-[#E8E3DC] w-full">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
+            <img src="/logo.png" alt="The Different Thought" className="h-12 sm:h-16 w-auto object-contain" />
           </Link>
 
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8 text-xs uppercase tracking-widest font-medium text-[#18181B]">
             <Link to="/" className="hover:text-[#FFB300] transition">Home</Link>
             <Link to="/about" className="hover:text-[#FFB300] transition">Origin</Link>
@@ -490,83 +493,152 @@ export const Header: React.FC = () => {
             <Link to="/contact" className="hover:text-[#FFB300] transition">Reach Out</Link>
           </nav>
 
-          <div className="flex items-center space-x-4">
+          {/* Action Area */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
+              type="button"
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#18181B] text-white hover:bg-black px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider transition uppercase flex items-center gap-1.5 shadow-sm"
+              className="bg-[#18181B] text-white hover:bg-black px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-semibold tracking-wider transition uppercase shadow-sm"
             >
               Subscribe
             </button>
+
+            {/* Mobile Hamburger / Close Button */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              aria-label="Toggle menu"
+              className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg text-[#18181B] hover:bg-[#E8E3DC]/40 focus:outline-none transition cursor-pointer"
+            >
+              {isMobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-[#E8E3DC] bg-[#FAF8F5] px-6 py-4 shadow-xl space-y-3 text-xs uppercase tracking-widest font-semibold text-[#18181B]">
+            <Link
+              to="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-2.5 hover:text-[#FFB300] border-b border-[#E8E3DC]/60 transition"
+            >
+              Home
+            </Link>
+            <Link
+              to="/about"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-2.5 hover:text-[#FFB300] border-b border-[#E8E3DC]/60 transition"
+            >
+              Origin
+            </Link>
+            <Link
+              to="/categories"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-2.5 hover:text-[#FFB300] border-b border-[#E8E3DC]/60 transition"
+            >
+              Pillars
+            </Link>
+            <Link
+              to="/blog"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-2.5 hover:text-[#FFB300] border-b border-[#E8E3DC]/60 transition"
+            >
+              Thoughts
+            </Link>
+            <Link
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block py-2.5 hover:text-[#FFB300] transition"
+            >
+              Reach Out
+            </Link>
+          </div>
+        )}
       </header>
 
       {/* Subscription Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="relative w-full max-w-md bg-[#FAF8F5] border border-[#E8E3DC] rounded-2xl p-8 shadow-2xl space-y-6">
+          <div className="relative w-full max-w-md bg-[#FAF8F5] border border-[#E8E3DC] rounded-3xl p-8 sm:p-10 shadow-2xl space-y-6">
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-5 right-5 text-[#71717A] hover:text-[#18181B] text-xl font-semibold leading-none"
+              className="absolute top-6 right-6 text-[#71717A] hover:text-[#18181B] text-2xl font-bold leading-none cursor-pointer"
             >
               &times;
             </button>
 
-            <div className="space-y-2 text-center">
-              <h2 className="font-serif text-3xl font-bold text-[#18181B]">Join the Dispatch</h2>
-              <p className="text-sm text-[#52525B] leading-relaxed">
+            <div className="space-y-2 text-center pt-2">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#18181B] tracking-tight">
+                Join the Dispatch
+              </h2>
+              <p className="text-sm text-[#52525B] leading-relaxed max-w-sm mx-auto">
                 Essays on deliberate craft, quiet observations, and slow journeys — delivered straight to your inbox.
               </p>
             </div>
 
             {status === 'success' ? (
-              <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-center text-sm font-medium">
+              <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-center text-sm font-medium">
                 Thank you for subscribing! Welcome aboard.
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">First Name</label>
+              <form onSubmit={handleSubscribe} className="space-y-5">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[11px] uppercase font-bold tracking-wider text-[#71717A]">
+                      First Name
+                    </label>
                     <input
                       type="text"
                       required
                       placeholder="Jane"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                      className="w-full px-4 py-3 bg-white border border-[#E8E3DC] rounded-2xl text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#18181B] transition shadow-xs"
                     />
                   </div>
-                  <div>
-                    <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">Last Name</label>
+                  <div className="space-y-1.5 text-left">
+                    <label className="block text-[11px] uppercase font-bold tracking-wider text-[#71717A]">
+                      Last Name
+                    </label>
                     <input
                       type="text"
                       required
                       placeholder="Doe"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                      className="w-full px-4 py-3 bg-white border border-[#E8E3DC] rounded-2xl text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#18181B] transition shadow-xs"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs uppercase font-semibold text-[#71717A] mb-1">Email Address</label>
+                <div className="space-y-1.5 text-left">
+                  <label className="block text-[11px] uppercase font-bold tracking-wider text-[#71717A]">
+                    Email Address
+                  </label>
                   <input
                     type="email"
                     required
                     placeholder="jane@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-[#E8E3DC] rounded-xl text-sm focus:outline-none focus:border-[#18181B]"
+                    className="w-full px-4 py-3 bg-white border border-[#E8E3DC] rounded-2xl text-sm text-[#18181B] placeholder:text-[#A1A1AA] focus:outline-none focus:border-[#18181B] transition shadow-xs"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full py-3 bg-[#18181B] hover:bg-black text-white font-semibold text-xs uppercase tracking-wider rounded-xl transition disabled:opacity-50 mt-2"
+                  className="w-full py-3.5 bg-[#18181B] hover:bg-black text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition disabled:opacity-50 shadow-md cursor-pointer mt-2"
                 >
                   {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
                 </button>
