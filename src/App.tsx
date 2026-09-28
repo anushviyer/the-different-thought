@@ -1598,30 +1598,37 @@ export const AboutPage: React.FC = () => {
   if (!author) return null;
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
+   <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
       <div className="flex flex-col sm:flex-row gap-8 items-center">
         <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 border border-[#E8E3DC]">
           <img src="/anush-author.png" alt="Anush Iyer" className="w-full h-full object-cover" />
         </div>
         <div className="space-y-2">
-          <h1 className="font-serif text-4xl font-bold text-[#18181B]">Hi, I'm Anush Iyer.</h1>
-          <p className="font-serif italic text-[#FFB300]">“Entrepreneur, observer, traveller, and always curious.”</p>
+          <h1 className="font-serif text-4xl font-bold text-[#18181B]">Hi, I&apos;m Anush Iyer.</h1>
+          <p className="font-serif italic text-[#FFB300]">&ldquo;Entrepreneur, observer, traveller, and always curious.&rdquo;</p>
           <p className="text-sm text-[#52525B] leading-relaxed">
-           I'm a second-generation entrepreneur in the world of design, brought up around creativity, ideas and the process of turning them into something real. Outside of work, I enjoy travelling, good conversations, great coffee, discovering new places and noticing the little things that often go unseen.
+            I&apos;m a second-generation entrepreneur in the world of design, brought up around creativity, ideas and the process of turning them into something real. Outside of work, I enjoy travelling, good conversations, great coffee, discovering new places and noticing the little things that often go unseen.
           </p>
         </div>
       </div>
-      <div className="space-y-4 border-t border-[#E8E3DC] pt-8">
-        <h2 className="font-serif text-2xl font-bold text-[#18181B]">My Story</h2>
-        <p className="text-sm text-[#52525B] leading-relaxed">
-        I grew up around design, creativity and the business of turning ideas into something real. As a second-generation entrepreneur, I&apos;ve had the opportunity to travel, meet interesting people, experience different cultures and see the world from many perspectives.
-      </p>
-      <p className="text-sm text-[#52525B] leading-relaxed">
-        <strong className="font-bold text-[#18181B]">The Different Thought</strong> is my space to share those experiences, ideas, observations and the little things that make life interesting &mdash; from travel and design to business, technology and everything in between.
-      </p>
+
+      <div className="space-y-6 border-t border-[#E8E3DC] pt-8 text-[#52525B] text-base leading-relaxed text-justify hyphens-auto">
+        <h2 className="font-serif text-2xl font-bold text-[#18181B] text-left">My Story</h2>
+        
+        <p>
+          Growing up around design and creativity gave me an early appreciation for ideas and the effort it takes to bring them to life. As a second-generation entrepreneur, my journey has been a mix of business, new experiences, travel and meeting people from different walks of life. Each has offered me a fresh perspective and, occasionally, a few lessons I didn&apos;t know I needed.
+        </p>
+
+        <p>
+          Beyond work, I enjoy exploring new places, discovering different cultures and finding stories in the little things around me. I&apos;m naturally curious about how things work, why people think the way they do and what makes everyday experiences worth remembering.
+        </p>
+
+        <p>
+          The Different Thought is where I bring these interests together. From travel and design to business, technology and everyday observations, this is a space for sharing ideas, exploring perspectives and looking at familiar things a little differently. After all, there&apos;s always another way to see things.
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export const CategoriesPage: React.FC = () => {
