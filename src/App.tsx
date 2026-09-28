@@ -1435,11 +1435,11 @@ export const AdminArticleEditor: React.FC = () => {
               className="w-full text-sm bg-white p-2 border border-[#E8E3DC] rounded-lg focus:outline-none focus:border-[#18181B]"
             >
               <option value="">Select a Category</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
+             {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+               {cat.name}
+              </option>
+            ))}
             </select>
           </div>
 
