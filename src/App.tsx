@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link, NavLink, Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 import { 
@@ -1284,6 +1284,135 @@ export const AdminArticlesList: React.FC = () => {
   );
 };
 
+interface RichTextEditorProps {
+  value: string;
+  onChange: (html: string) => void;
+}
+
+export const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
+  const editorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (editorRef.current && editorRef.current.innerHTML !== value) {
+      editorRef.current.innerHTML = value || '';
+    }
+  }, [value]);
+
+  const execute = (command: string, arg: string | undefined = undefined) => {
+    document.execCommand(command, false, arg);
+    if (editorRef.current) {
+      onChange(editorRef.current.innerHTML);
+    }
+  };
+
+  return (
+    <div className="border border-[#E8E3DC] rounded-xl overflow-hidden bg-white">
+      {/* Formatting Toolbar */}
+      <div className="flex flex-wrap items-center gap-1.5 p-2 bg-[#FBFBFA] border-b border-[#E8E3DC] text-xs">
+        {/* Bold */}
+        <button
+          type="button"
+          onClick={() => execute('bold')}
+          className="w-7 h-7 font-bold hover:bg-neutral-200 rounded border border-[#E8E3DC] bg-white transition flex items-center justify-center"
+          title="Bold"
+        >
+          B
+        </button>
+
+        {/* Italic */}
+        <button
+          type="button"
+          onClick={() => execute('italic')}
+          className="w-7 h-7 italic hover:bg-neutral-200 rounded border border-[#E8E3DC] bg-white transition flex items-center justify-center"
+          title="Italic"
+        >
+          I
+        </button>
+
+        {/* Underline */}
+        <button
+          type="button"
+          onClick={() => execute('underline')}
+          className="w-7 h-7 underline hover:bg-neutral-200 rounded border border-[#E8E3DC] bg-white transition flex items-center justify-center"
+          title="Underline"
+        >
+          U
+        </button>
+
+        <div className="w-[1px] h-5 bg-[#E8E3DC] mx-1" />
+
+        {/* Font Size */}
+        <select
+          onChange={(e) => execute('fontSize', e.target.value)}
+          defaultValue="3"
+          className="h-7 px-2 border border-[#E8E3DC] rounded bg-white text-xs focus:outline-none"
+          title="Font Size"
+        >
+          <option value="1">Small</option>
+          <option value="3">Normal</option>
+          <option value="5">Large</option>
+          <option value="7">Extra Large</option>
+        </select>
+
+        {/* Font Color */}
+        <label className="flex items-center gap-1.5 h-7 px-2 border border-[#E8E3DC] rounded bg-white cursor-pointer hover:bg-neutral-50" title="Text Color">
+          <span className="font-semibold">Color:</span>
+          <input
+            type="color"
+            defaultValue="#18181B"
+            onChange={(e) => execute('foreColor', e.target.value)}
+            className="w-4 h-4 cursor-pointer border-0 p-0 bg-transparent"
+          />
+        </label>
+
+        <div className="w-[1px] h-5 bg-[#E8E3DC] mx-1" />
+
+        {/* Unordered / Bullet List */}
+        <button
+          type="button"
+          onClick={() => execute('insertUnorderedList')}
+          className="px-2 h-7 hover:bg-neutral-200 rounded border border-[#E8E3DC] bg-white transition flex items-center justify-center text-xs"
+          title="Bullet List"
+        >
+          • List
+        </button>
+
+        {/* Numbered List */}
+        <button
+          type="button"
+          onClick={() => execute('insertOrderedList')}
+          className="px-2 h-7 hover:bg-neutral-200 rounded border border-[#E8E3DC] bg-white transition flex items-center justify-center text-xs"
+          title="Numbered List"
+        >
+          1. List
+        </button>
+
+        {/* Remove Formatting */}
+        <button
+          type="button"
+          onClick={() => execute('removeFormat')}
+          className="px-2 h-7 text-[#71717A] hover:bg-neutral-200 rounded border border-[#E8E3DC] bg-white transition flex items-center justify-center text-xs ml-auto"
+          title="Clear Formatting"
+        >
+          Clear
+        </button>
+      </div>
+
+      {/* Editable Area */}
+      <div
+        ref={editorRef}
+        contentEditable
+        onInput={() => {
+          if (editorRef.current) {
+            onChange(editorRef.current.innerHTML);
+          }
+        }}
+        className="min-h-[350px] p-4 font-sans text-sm focus:outline-none overflow-y-auto leading-relaxed"
+      />
+    </div>
+  );
+};
+
 export const AdminArticleEditor: React.FC = () => {
   const { id } = useParams();
   const isNew = !id || id === 'new';
@@ -1482,13 +1611,7 @@ export const AdminArticleEditor: React.FC = () => {
           )}
         </div>
 
-        <textarea
-          rows={14}
-          placeholder="Content in HTML"
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          className="w-full font-mono text-sm p-4 border border-[#E8E3DC] rounded-xl focus:outline-none focus:border-[#18181B]"
-        />
+        <RichTextEditor value={content} onChange={setContent} />
       </div>
     </div>
   );
