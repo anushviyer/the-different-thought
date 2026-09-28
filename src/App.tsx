@@ -636,7 +636,7 @@ export const PublicLayout: React.FC = () => (
    5. PUBLIC PAGES
    ========================================================================== */
 export const HomePage: React.FC = () => {
-  const [featured, setFeatured] = useState<Article | null>(null);
+  const [displayedFeatured, setDisplayedFeatured] = useState<Article[]>([]);
   const [latest, setLatest] = useState<Article[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [author, setAuthor] = useState<AuthorProfile | null>(null);
@@ -647,10 +647,9 @@ export const HomePage: React.FC = () => {
     async function load() {
       const articles = await dbEngine.getArticles();
       const pub = articles.filter(a => a.status === 'published');
-     const feat = pub.find(a => a.featured) || pub[0] || null;
-      setFeatured(feat);
-      setLatest(pub.filter(a => a.id !== feat?.id).slice(0, 4));
-      setCategories(await dbEngine.getCategories());
+     const featuredList = pub.filter(a => a.featured).slice(0, 3);
+setDisplayedFeatured(featuredList.length > 0 ? featuredList : pub.slice(0, 1));
+setLatest(pub);
       setAuthor(await dbEngine.getAuthorProfile());
     }
     load();
