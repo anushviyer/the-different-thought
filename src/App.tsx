@@ -1697,14 +1697,12 @@ export const AboutPage: React.FC = () => {
     load();
   }, []);
   if (!author) return null;
-
-  return (
+return (
     <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
       <SEO
         title="About Anush Iyer | Origin & Story"
         description="Learn about Anush Iyer, a second-generation design entrepreneur, observer, and writer sharing reflections on slow journeys, creativity, and perspective."
       />
-   <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
       <div className="flex flex-col sm:flex-row gap-8 items-center">
         <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 border border-[#E8E3DC]">
           <img src="/anush-author.png" alt="Anush Iyer" className="w-full h-full object-cover" />
@@ -1742,12 +1740,11 @@ export const CategoriesPage: React.FC = () => {
   useEffect(() => { async function load() { setCategories(await dbEngine.getCategories()); } load(); }, []);
 
   return (
-      <div className="max-w-6xl mx-auto px-6 py-12 space-y-8">
+    <div className="max-w-6xl mx-auto px-6 py-12 space-y-8">
       <SEO
         title="Topic Collections & Pillars"
         description="Explore thematic collections covering Thoughts & Perspectives, Craft & Lifestyle, Travel, Mindful Design, Technology, and Business Ventures."
       />
-    <div className="max-w-6xl mx-auto px-6 py-12 space-y-8">
       <h1 className="font-serif text-4xl font-bold text-[#18181B]">Topic Collections</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {categories.map(c => (
@@ -1762,7 +1759,7 @@ export const CategoriesPage: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export const CategoryDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -1784,6 +1781,10 @@ export const CategoryDetailPage: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12 space-y-8">
+      <SEO
+        title={catName || 'Collection'}
+        description={`Read selected essays and reflections filed under ${catName || 'this pillar'} on The Different Thought.`}
+      />
       <h1 className="font-serif text-4xl font-bold text-[#18181B]">{catName || 'Category'}</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {articles.map(art => (
@@ -1829,12 +1830,11 @@ export const SearchPage: React.FC = () => {
 
 export const ContactPage: React.FC = () => {
   return (
-      <div className="max-w-4xl mx-auto px-6 py-16 space-y-16">
+    <div className="max-w-4xl mx-auto px-6 py-16 space-y-16">
       <SEO
         title="Reach Out & Connect"
         description="Have a thought, question, collaboration idea, or want to say hello? Get in touch with Anush Iyer at The Different Thought."
       />
-    <div className="max-w-4xl mx-auto px-6 py-16 space-y-16">
       {/* Intro Header + Profile Circle & Social Icons */}
       <section className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
         <div className="space-y-4 max-w-xl text-center md:text-left">
@@ -1853,11 +1853,10 @@ export const ContactPage: React.FC = () => {
         <div className="flex flex-col items-center gap-4 shrink-0">
           <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-[#E8E3DC] shadow-sm bg-white">
             <img
-              src="anush-author.png"
+              src="/anush-author.png"
               alt="Author"
               className="w-full h-full object-cover"
               onError={(e) => {
-                // Graceful fallback if author.jpg hasn't been uploaded yet
                 (e.target as HTMLElement).style.display = 'none';
               }}
             />
@@ -1989,13 +1988,13 @@ export const AdminLayout: React.FC = () => {
       <aside className="w-60 border-r border-[#E8E3DC] bg-white p-6 flex flex-col justify-between shrink-0">
         <div className="space-y-6">
           <div className="flex items-center gap-2">
-  <img 
-    src="/logo.png" 
-    alt="The Different Thought" 
-    className="h-12 w-auto object-contain" 
-  />
-  <span className="text-xs uppercase tracking-wider font-semibold text-[#71717A]">&bull; CMS</span>
-</div>
+            <img 
+              src="/logo.png" 
+              alt="The Different Thought" 
+              className="h-12 w-auto object-contain" 
+            />
+            <span className="text-xs uppercase tracking-wider font-semibold text-[#71717A]">&bull; CMS</span>
+          </div>
           <Link to="/admin/articles/new" className="block text-center py-2 bg-[#FFB300] text-white text-xs uppercase font-semibold rounded-lg">
             + New Essay
           </Link>
