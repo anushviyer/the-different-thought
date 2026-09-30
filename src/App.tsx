@@ -1591,11 +1591,11 @@ export const BlogPage: React.FC = () => {
   });
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
-      <SEO
+    <SEO
         title="Essays & Dispatches Archive"
         description="Browse the complete collection of essays, personal dispatches, travel observations, and contemplative thoughts written by Anush Iyer."
       />
+    <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
     <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
       <div className="border-b border-[#E8E3DC] pb-6 space-y-2">
         <h1 className="font-serif text-4xl font-bold text-[#18181B]">All Essays &amp; Dispatches</h1>
