@@ -81,6 +81,38 @@ export interface MediaAsset {
   created_at: string;
 }
 
+interface SEOProps {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+export const SEO: React.FC<SEOProps> = ({ title, description, image = '/anush-iyer.png' }) => {
+  useEffect(() => {
+    document.title = title.includes('The Different Thought') ? title : `${title} | The Different Thought`;
+
+    const updateMeta = (nameOrProperty: string, value: string, content: string) => {
+      let tag = document.querySelector(`meta[${nameOrProperty}="${value}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute(nameOrProperty, value);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', content);
+    };
+
+    updateMeta('name', 'description', description);
+    updateMeta('property', 'og:title', document.title);
+    updateMeta('property', 'og:description', description);
+    updateMeta('property', 'og:image', image.startsWith('http') ? image : `${window.location.origin}${image}`);
+    updateMeta('name', 'twitter:title', document.title);
+    updateMeta('name', 'twitter:description', description);
+    updateMeta('name', 'twitter:image', image.startsWith('http') ? image : `${window.location.origin}${image}`);
+  }, [title, description, image]);
+
+  return null;
+};
+
 /* ==========================================================================
    2. SUPABASE & DATABASE ENGINE
    ========================================================================== */
@@ -1303,6 +1335,10 @@ const featured = displayedFeatured[0];
   
   return (
     <div className="space-y-24 pb-20">
+      <SEO
+        title="The Different Thought | Essays, Observations & Perspectives"
+        description="An independent digital publication by Anush Iyer exploring travel, design, business ideas, and the quiet nuances of everyday life."
+      />
       <section className="pt-12 md:pt-20 px-6 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
