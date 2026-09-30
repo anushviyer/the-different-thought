@@ -1592,6 +1592,11 @@ export const BlogPage: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
+      <SEO
+        title="Essays & Dispatches Archive"
+        description="Browse the complete collection of essays, personal dispatches, travel observations, and contemplative thoughts written by Anush Iyer."
+      />
+    <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
       <div className="border-b border-[#E8E3DC] pb-6 space-y-2">
         <h1 className="font-serif text-4xl font-bold text-[#18181B]">All Essays &amp; Dispatches</h1>
         <p className="text-sm text-[#52525B]">The complete ongoing archive of personal writings and observations.</p>
@@ -1654,6 +1659,12 @@ export const ArticlePage: React.FC = () => {
   if (!article) return <div className="py-20 text-center text-sm">Loading essay...</div>;
 
   return (
+      <article className="max-w-3xl mx-auto px-6 py-12 space-y-8">
+      <SEO
+        title={article.title}
+        description={article.excerpt || article.title}
+        image={article.cover_image_url}
+      />
     <article className="max-w-3xl mx-auto px-6 py-12 space-y-8">
       <Link to="/blog" className="inline-flex items-center gap-1 text-xs uppercase tracking-wider text-[#71717A] hover:text-[#18181B]">
         <ArrowLeft className="w-3.5 h-3.5" /> Return to Archive
@@ -1691,6 +1702,11 @@ export const AboutPage: React.FC = () => {
   if (!author) return null;
 
   return (
+    <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
+      <SEO
+        title="About Anush Iyer | Origin & Story"
+        description="Learn about Anush Iyer, a second-generation design entrepreneur, observer, and writer sharing reflections on slow journeys, creativity, and perspective."
+      />
    <div className="max-w-3xl mx-auto px-6 py-16 space-y-12">
       <div className="flex flex-col sm:flex-row gap-8 items-center">
         <div className="w-40 h-40 rounded-2xl overflow-hidden shrink-0 border border-[#E8E3DC]">
@@ -1729,6 +1745,11 @@ export const CategoriesPage: React.FC = () => {
   useEffect(() => { async function load() { setCategories(await dbEngine.getCategories()); } load(); }, []);
 
   return (
+      <div className="max-w-6xl mx-auto px-6 py-12 space-y-8">
+      <SEO
+        title="Topic Collections & Pillars"
+        description="Explore thematic collections covering Thoughts & Perspectives, Craft & Lifestyle, Travel, Mindful Design, Technology, and Business Ventures."
+      />
     <div className="max-w-6xl mx-auto px-6 py-12 space-y-8">
       <h1 className="font-serif text-4xl font-bold text-[#18181B]">Topic Collections</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1811,6 +1832,11 @@ export const SearchPage: React.FC = () => {
 
 export const ContactPage: React.FC = () => {
   return (
+      <div className="max-w-4xl mx-auto px-6 py-16 space-y-16">
+      <SEO
+        title="Reach Out & Connect"
+        description="Have a thought, question, collaboration idea, or want to say hello? Get in touch with Anush Iyer at The Different Thought."
+      />
     <div className="max-w-4xl mx-auto px-6 py-16 space-y-16">
       {/* Intro Header + Profile Circle & Social Icons */}
       <section className="flex flex-col md:flex-row items-center md:items-start justify-between gap-10">
